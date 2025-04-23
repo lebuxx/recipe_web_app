@@ -11,20 +11,38 @@ class Database:
 
     def save_recipe(self, recipe):
         con = sqlite3.connect('saved_recipes.db')
+        try:
+            cur = con.cursor()
+            cur.execute(
+                "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?,?)",
+                    (
+                str(recipe.parsed.name),
+                json.dumps(recipe.parsed.portionen),
+                json.dumps(recipe.parsed.zubereitungszeit),
+                json.dumps(recipe.parsed.zutaten),
+                json.dumps(recipe.parsed.zubereitungsschritte),
+                json.dumps(recipe.parsed.tipps)
+                    )
+            )
+            con.commit()
+            print("Rezept gespeichert")
+        except Exception as e:
+            print("Fehler beim Speichern des Rezepts:", e)
+        finally:
+            con.close()
+
+    def print_latest_recipes(self):
+
+        con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
-        cur.execute(
-            "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?,?)",
-                (
-            str(recipe.parsed.name),
-            json.dumps(recipe.parsed.portionen),
-            json.dumps(recipe.parsed.zubereitungszeit),
-            json.dumps(recipe.parsed.zutaten),
-            json.dumps(recipe.parsed.zubereitungsschritte),
-            json.dumps(recipe.parsed.tipps)
-                )
-        )
-        con.commit()
+        cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 5")
+        latest_titles = [row[0] for row in cur.fetchall()]
+        print("Letzte 5 gespeicherte Titel:")
+        for titel in latest_titles:
+            print(titel)
         con.close()
+
+      
 
     def get_previous_recipes():
         con = sqlite3.connect('saved_recipes.db')
