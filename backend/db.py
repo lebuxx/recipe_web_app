@@ -1,0 +1,34 @@
+import sqlite3
+import json
+
+
+class Database:
+    def __init__(self):
+        con = sqlite3.connect('saved_recipes.db')
+        cur = con.cursor()
+        cur.execute(("CREATE TABLE IF NOT EXISTS recipes(Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps)"))
+        con.close()
+
+    def save_recipe(self, recipe):
+        con = sqlite3.connect('saved_recipes.db')
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?,?)",
+                (
+            str(recipe.parsed.name),
+            json.dumps(recipe.parsed.portionen),
+            json.dumps(recipe.parsed.zubereitungszeit),
+            json.dumps(recipe.parsed.zutaten),
+            json.dumps(recipe.parsed.zubereitungsschritte),
+            json.dumps(recipe.parsed.tipps)
+                )
+        )
+        con.commit()
+        con.close()
+
+    def get_previous_recipes():
+        con = sqlite3.connect('saved_recipes.db')
+        cur = con.cursor()
+        cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 7")
+        last_titles = [row[0] for row in cur.fetchall()]
+        return last_titles

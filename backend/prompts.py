@@ -1,3 +1,5 @@
+from db import Database
+
 class Prompts:
     prompt_generating_recipe = """
         Erstelle ein gesundes, einfaches und ausgewogenes Rezept für ein Mittagsessen oder Abendessen, das sich an den folgenden Kriterien orientiert:
@@ -30,3 +32,12 @@ class Prompts:
         Gib die geschätzten Nährwerte pro Portion (Kalorien, Eiweiß, Fett, Kohlenhydrate).
 
         """
+
+    def prompt_extension_previous_recipes():
+        last_titles = Database.get_previous_recipes()
+        if last_titles:
+            prompt_extension = ("\nWichtig: Das neue Rezept soll sich von den folgenden bereits existierenden Rezepten unterscheiden: " +
+                                ", ".join(last_titles))
+        else:
+            prompt_extension = ""
+        return prompt_extension

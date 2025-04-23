@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port that FastAPI will run on
-EXPOSE 80
+EXPOSE 81
 
 # Define the command to run FastAPI
-CMD ["fastapi", "run", "main.py", "--port", "80"] 
+CMD ["fastapi", "run", "main.py", "--port", "81"] 

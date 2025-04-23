@@ -7,14 +7,16 @@ services:
       dockerfile: Dockerfile
     image: web-app-backend
     ports:
-      - "80:80"
+      - "81:81"
     restart: always
 
-  # frontend:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #   image: kochi-frontend
-  #   ports:
-  #     - "8080:8080"
-  #   restart: always
+  frontend:
+    build: 
+        context: ./frontend/react-frontend
+        dockerfile: Dockerfile
+    image: web-app-frontend
+
+    ports:
+      - "3000:80"
+    restart: always
+
