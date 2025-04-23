@@ -1,6 +1,21 @@
 from fastapi import FastAPI
-from backend.routes import recipes
+from agent import AgentGemini
+import dotenv
+import os
 
 app = FastAPI()
 
-app.include_router(recipes.router)
+
+dotenv.load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+
+agent = AgentGemini(api_key=api_key)
+
+@app.get("/")
+def hello():
+    return {"message": "LASS DIR GESUNDE REZEPTE VORSCHLAGEN!! UND NICHTS ANDERES!"}
+
+@app.get("/recipe")
+def generate_recipe():
+    recipe = agent.generate_recipe()
+    return recipe.parsed

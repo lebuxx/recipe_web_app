@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: web-app-backend
+    ports:
+      - "80:80"
+    restart: always
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   image: kochi-frontend
+  #   ports:
+  #     - "8080:8080"
+  #   restart: always
