@@ -26,11 +26,24 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.1.4"}
+    return {"version": "0.3.5"}
 
 @app.get("/recipe")
 def generate_recipe():
     recipe = agent.generate_recipe()
-    database.save_recipe(recipe)
     database.print_latest_recipes()
     return recipe.parsed
+
+@app.post("/save_recipe")
+def save_recipe(recipe: dict):
+    try:
+        database.save_recipe(recipe)
+        return {"message": "Recipe saved successfully"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
+@app.get("/get_saved_recipes")
+def get_saved_recipes():
+    all_recipes = database.get_all_recipes()
+    return {"recipes": all_recipes}

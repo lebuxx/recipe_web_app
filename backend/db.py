@@ -32,7 +32,6 @@ class Database:
             con.close()
 
     def print_latest_recipes(self):
-
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
         cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 5")
@@ -42,11 +41,19 @@ class Database:
             print(titel)
         con.close()
 
-      
-
     def get_previous_recipes():
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
         cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 7")
         last_titles = [row[0] for row in cur.fetchall()]
         return last_titles
+    
+
+    # funktioniert noch nicht: TypeError: Database.get_all_recipes() takes 0 positional arguments but 1 was given
+    
+    def get_all_recipes(self):
+        con = sqlite3.connect('saved_recipes.db')
+        cur = con.cursor()
+        cur.execute("SELECT * FROM recipes")
+        all_recipes = cur.fetchall()
+        return all_recipes
