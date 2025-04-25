@@ -31,15 +31,6 @@ class Database:
         finally:
             con.close()
 
-    def print_latest_recipes(self):
-        con = sqlite3.connect('saved_recipes.db')
-        cur = con.cursor()
-        cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 5")
-        latest_titles = [row[0] for row in cur.fetchall()]
-        print("Letzte 5 gespeicherte Titel:")
-        for titel in latest_titles:
-            print(titel)
-        con.close()
 
     def get_previous_recipes():
         con = sqlite3.connect('saved_recipes.db')

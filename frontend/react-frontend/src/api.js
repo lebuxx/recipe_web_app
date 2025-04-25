@@ -6,7 +6,8 @@ export const fetchNewRecipe = async () => {
     if (!response.ok) {
       throw new Error('Failed to fetch recipe');
     }
-    return await response.json();
+    const data = await response.json();
+    return data.parsed || data;
   } catch (error) {
     console.error('Error fetching recipe:', error);
     throw error;

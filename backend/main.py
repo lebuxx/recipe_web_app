@@ -26,13 +26,12 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.3.5"}
+    return {"version": "0.3.6"}
 
 @app.get("/recipe")
 def generate_recipe():
     recipe = agent.generate_recipe()
-    database.print_latest_recipes()
-    return recipe.parsed
+    return recipe
 
 @app.post("/save_recipe")
 def save_recipe(recipe: dict):

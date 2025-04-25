@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { fetchNewRecipe, saveRecipe } from '../api';
 
+
+
 const NewRecipePage = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,9 +15,10 @@ const NewRecipePage = () => {
     setLoading(true);
     try {
       const data = await fetchNewRecipe();
+      console.log("Neues Rezept:", data);
       setRecipe(data);
       setError(null);
-      setSaved(false); // Reset saved state when generating a new recipe
+      setSaved(false); 
     } catch (err) {
       setError('Fehler beim Laden des Rezepts. Bitte versuchen Sie es später erneut.');
     } finally {

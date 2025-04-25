@@ -6,6 +6,7 @@ const SavedRecipesPage = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,24 +26,38 @@ const SavedRecipesPage = () => {
     getSavedRecipes();
   }, []);
 
+  const filteredRecipes = recipes.filter(recipe => 
+    recipe.title && recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="recipe-container">
       <Link to="/" className="home-icon">🏠</Link>
       <h1 className="recipe-title">Deine kulinarische Schatztruhe</h1>
 
+      <div className="search-container">
+        <input 
+          type="text" 
+          className="search-input" 
+          placeholder="Rezepte durchsuchen..." 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       {loading ? (
         <p>Rezepte werden geladen...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : recipes.length > 0 ? (
+      ) : filteredRecipes.length > 0 ? (
         <ul className="saved-recipes-list">
-          {recipes.map((recipe, index) => (
+          {filteredRecipes.map((recipe, index) => (
             <li 
               key={index} 
               className="saved-recipe-item"
               onClick={() => navigate(`/saved-recipe/${index}`, { state: { recipe } })}
             >
-              {recipe.title || 'Unbenanntes Rezept'}
+              {recipe.title}
             </li>
           ))}
         </ul>
