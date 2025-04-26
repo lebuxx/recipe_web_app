@@ -50,14 +50,6 @@ const SavedRecipesPage = () => {
         <p>Keine gespeicherten Rezepte gefunden.</p>
       )}
 
-      <div className="recipe-buttons">
-        <button 
-          className="btn btn-primary" 
-          onClick={() => navigate('/')}
-        >
-          Zurück zur Startseite
-        </button>
-      </div>
     </div>
   );
 };
