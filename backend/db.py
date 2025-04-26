@@ -16,12 +16,12 @@ class Database:
             cur.execute(
                 "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?, ?)",
                     (
-                str(recipe.parsed.name),
-                json.dumps(recipe.parsed.portionen),
-                json.dumps(recipe.parsed.zubereitungszeit),
-                json.dumps(recipe.parsed.zutaten),
-                json.dumps(recipe.parsed.zubereitungsschritte),
-                json.dumps(recipe.parsed.tipps), 
+                str(recipe['name']),  # Access as dictionary
+                json.dumps(recipe['portionen']),
+                json.dumps(recipe['zubereitungszeit']),
+                json.dumps(recipe['zutaten']),
+                json.dumps(recipe['zubereitungsschritte']),
+                json.dumps(recipe['tipps']), 
                     )
             )
             con.commit()

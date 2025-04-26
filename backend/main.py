@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from agent import AgentGemini
 from db import Database
+from typing import Dict, Any
+
 import dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,13 +30,14 @@ database = Database()
 def hello():
     return {"version": "0.3.6"}
 
-@app.get("/recipe")
+@app.get("/generate_recipe")
 def generate_recipe():
     recipe = agent.generate_recipe()
     return recipe
 
 @app.post("/save_recipe")
-def save_recipe(recipe: dict):
+def save_recipe(recipe: Dict[str, Any] = Body(...)):
+    print("Received recipe:", recipe)  # Debug-Ausgabe
     try:
         database.save_recipe(recipe)
         return {"message": "Recipe saved successfully"}

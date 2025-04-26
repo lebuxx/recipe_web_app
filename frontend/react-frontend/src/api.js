@@ -2,7 +2,7 @@ const API_BASE_URL = 'http://localhost:81';
 
 export const fetchNewRecipe = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/recipe`);
+    const response = await fetch(`${API_BASE_URL}/generate_recipe`);
     if (!response.ok) {
       throw new Error('Failed to fetch recipe');
     }
@@ -15,6 +15,7 @@ export const fetchNewRecipe = async () => {
 };
 
 export const saveRecipe = async (recipe) => {
+  console.log('recipe:', recipe); // Debugging line
   try {
     const response = await fetch(`${API_BASE_URL}/save_recipe`, {
       method: 'POST',

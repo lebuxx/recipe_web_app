@@ -132,13 +132,13 @@ const NewRecipePage = () => {
         </div>
       ) : (
         <div className="recipe-buttons">
-          <p>Rezept wurde erfolgreich gespeichert!</p>
           <button 
             className="btn btn-primary" 
             onClick={handleGenerateNewRecipe}
           >
-            Neues Rezept generieren
+            Neues Rezept
           </button>
+          <p>Rezept wurde erfolgreich gespeichert!</p>
         </div>
       )}
     </div>
