@@ -30,22 +30,22 @@ const SavedRecipeDetailPage = () => {
         className="back-button" 
         onClick={() => navigate('/saved-recipes')}
       >
-        ← Zurück zu gespeicherten Rezepten
+        ← 
       </button>
       
       <h1 className="recipe-title">{recipe.title}</h1>
       
       <div className="recipe-meta">
-        <p>Bearbeitungszeit: {recipe.preparation_time || '30 Minuten'}</p>
-        <p>Portionen: {recipe.servings || '4'}</p>
+        <p>Bearbeitungszeit: {recipe.time || '30 Minuten'}</p>
+        <p>Portionen: {recipe.portions || '4'}</p>
       </div>
       
       <div className="recipe-content">
         <div className="recipe-content-section">
           <h3>Zutaten:</h3>
           <ul className="ingredients-list">
-            {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
+            {recipe.ingredients && recipe.ingredients.map((zutat, index) => (
+              <li key={index}>{zutat}</li>
             ))}
           </ul>
         </div>
@@ -53,16 +53,21 @@ const SavedRecipeDetailPage = () => {
         <div className="recipe-content-section">
           <h3>Zubereitungsschritte:</h3>
           <ol className="steps-list">
-            {recipe.instructions && recipe.instructions.map((step, index) => (
-              <li key={index}>{step}</li>
+            {recipe.steps && recipe.steps.map((schritt, index) => (
+              <li key={index}>{schritt}</li>
             ))}
           </ol>
         </div>
       </div>
       
-      {recipe.tip && (
+      {recipe.tips && (
         <div className="recipe-tip">
-          {recipe.tip}
+          <h3>Tipps:</h3>
+          <ul>
+            {recipe.tips.map((tipp, index) => (
+              <li key={index}>{tipp}</li>
+            ))}
+          </ul>        
         </div>
       )}
     </div>

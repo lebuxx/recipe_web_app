@@ -14,14 +14,14 @@ class Database:
         try:
             cur = con.cursor()
             cur.execute(
-                "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?,?)",
+                "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?, ?)",
                     (
                 str(recipe.parsed.name),
                 json.dumps(recipe.parsed.portionen),
                 json.dumps(recipe.parsed.zubereitungszeit),
                 json.dumps(recipe.parsed.zutaten),
                 json.dumps(recipe.parsed.zubereitungsschritte),
-                json.dumps(recipe.parsed.tipps)
+                json.dumps(recipe.parsed.tipps), 
                     )
             )
             con.commit()
@@ -40,11 +40,24 @@ class Database:
         return last_titles
     
 
-    # funktioniert noch nicht: TypeError: Database.get_all_recipes() takes 0 positional arguments but 1 was given
     
     def get_all_recipes(self):
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
         cur.execute("SELECT * FROM recipes")
-        all_recipes = cur.fetchall()
-        return all_recipes
+        raw_recipes = cur.fetchall()
+        con.close()
+        
+        recipes_list = []
+        for recipe in raw_recipes:
+            formatted_recipe = {
+                "title": recipe[0],
+                "portions": recipe[1],
+                "time": recipe[2].strip('"'),
+                "ingredients": json.loads(recipe[3]),
+                "steps": json.loads(recipe[4]),
+                "tips": json.loads(recipe[5]) if len(recipe) > 5 else []
+            }
+            recipes_list.append(formatted_recipe)
+        
+        return recipes_list
