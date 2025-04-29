@@ -33,18 +33,18 @@ const SavedRecipeDetailPage = () => {
         ← 
       </button>
       
-      <h1 className="recipe-title">{recipe.title}</h1>
+      <h1 className="recipe-title">{recipe.titel}</h1>
       
       <div className="recipe-meta">
-        <p>Bearbeitungszeit: {recipe.time || '30 Minuten'}</p>
-        <p>Portionen: {recipe.portions || '4'}</p>
+        <p>Bearbeitungszeit: {recipe.bearbeitungszeit || '30 Minuten'}</p>
+        <p>Portionen: {recipe.portionen || '4'}</p>
       </div>
       
       <div className="recipe-content">
         <div className="recipe-content-section">
           <h3>Zutaten:</h3>
           <ul className="ingredients-list">
-            {recipe.ingredients && recipe.ingredients.map((zutat, index) => (
+            {recipe.zutaten && recipe.zutaten.map((zutat, index) => (
               <li key={index}>{zutat}</li>
             ))}
           </ul>
@@ -53,18 +53,18 @@ const SavedRecipeDetailPage = () => {
         <div className="recipe-content-section">
           <h3>Zubereitungsschritte:</h3>
           <ol className="steps-list">
-            {recipe.steps && recipe.steps.map((schritt, index) => (
+            {recipe.zubereitungsschritte && recipe.zubereitungsschritte.map((schritt, index) => (
               <li key={index}>{schritt}</li>
             ))}
           </ol>
         </div>
       </div>
       
-      {recipe.tips && (
+      {recipe.tipps && (
         <div className="recipe-tip">
           <h3>Tipps:</h3>
           <ul>
-            {recipe.tips.map((tipp, index) => (
+            {recipe.tipps.map((tipp, index) => (
               <li key={index}>{tipp}</li>
             ))}
           </ul>        

@@ -16,7 +16,7 @@ class Database:
             cur.execute(
                 "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?, ?)",
                     (
-                str(recipe['name']),  # Access as dictionary
+                str(recipe['titel']),  # Access as dictionary
                 json.dumps(recipe['portionen']),
                 json.dumps(recipe['zubereitungszeit']),
                 json.dumps(recipe['zutaten']),
@@ -51,12 +51,12 @@ class Database:
         recipes_list = []
         for recipe in raw_recipes:
             formatted_recipe = {
-                "title": recipe[0],
-                "portions": recipe[1],
-                "time": recipe[2].strip('"'),
-                "ingredients": json.loads(recipe[3]),
-                "steps": json.loads(recipe[4]),
-                "tips": json.loads(recipe[5]) if len(recipe) > 5 else []
+                "titel": recipe[0],
+                "portionen": recipe[1],
+                "zubereitungszeit": recipe[2].strip('"'),
+                "zutaten": json.loads(recipe[3]),
+                "zubereitungsschritte": json.loads(recipe[4]),
+                "tipps": json.loads(recipe[5]) if len(recipe) > 5 else []
             }
             recipes_list.append(formatted_recipe)
         

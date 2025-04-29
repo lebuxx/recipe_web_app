@@ -41,3 +41,16 @@ class Prompts:
         else:
             prompt_extension = ""
         return prompt_extension
+    
+    def prompt_extension_ingredients_at_home(ingredients: list):
+        if ingredients and len(ingredients) > 0:
+            prompt_extension = f"Hier sind Zutaten die gerade Zuhause sind. Diese sollen in dem Rezeptvorschlag verwendet werden: {', '.join(ingredients)}"
+        else:
+            prompt_extension = ""
+        return prompt_extension
+
+    def generating_prompt(ingredients: list = None) -> str:
+        prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_previous_recipes()
+        print("Prompt:", prompt)  # Debugging Line
+        return prompt
+    

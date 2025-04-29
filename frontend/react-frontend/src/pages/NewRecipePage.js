@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { fetchNewRecipe, saveRecipe } from '../api';
-
-
 
 const NewRecipePage = () => {
   const [recipe, setRecipe] = useState(null);
@@ -10,16 +8,22 @@ const NewRecipePage = () => {
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Zutaten aus location state holen, wenn vorhanden
+  const ingredients = location.state?.ingredients || [];
 
   const getRecipe = async () => {
     setLoading(true);
     try {
-      const data = await fetchNewRecipe();
+      // Übergebe ingredients an fetchNewRecipe - auch wenn es ein leeres Array ist
+      const data = await fetchNewRecipe(ingredients);
       console.log("Neues Rezept:", data);
       setRecipe(data);
       setError(null);
       setSaved(false); 
     } catch (err) {
+      console.error("Fehler beim Laden des Rezepts:", err);
       setError('Fehler beim Laden des Rezepts. Bitte versuchen Sie es später erneut.');
     } finally {
       setLoading(false);
@@ -40,7 +44,7 @@ const NewRecipePage = () => {
   };
 
   const handleGenerateNewRecipe = () => {
-    // Simply call getRecipe() instead of reloading the page
+    // Original-Verhalten: Neues Rezept auf derselben Seite generieren
     getRecipe();
   };
 
@@ -78,7 +82,19 @@ const NewRecipePage = () => {
   return (
     <div className="recipe-container">
       <Link to="/" className="home-icon">🏠</Link>
-      <h1 className="recipe-title">{recipe.name}</h1>
+      <h1 className="recipe-title">{recipe.titel}</h1>
+      
+      {/* Zeige verwendete Zutaten an, wenn vorhanden */}
+      {ingredients && ingredients.length > 0 && (
+        <div className="ingredients-used">
+          <h3>Verwendete Zutaten von zuhause:</h3>
+          <div className="ingredients-badges">
+            {ingredients.map((ingredient, index) => (
+              <span key={index} className="ingredient-badge">{ingredient}</span>
+            ))}
+          </div>
+        </div>
+      )}
       
       <div className="recipe-meta">
         <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>

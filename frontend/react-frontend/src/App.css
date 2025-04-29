@@ -21,7 +21,7 @@ body {
 }
 
 .home-title {
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 2rem;
   text-transform: uppercase;
   font-weight: bold;
@@ -192,4 +192,42 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
+}
+
+.ingredients-input-container {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.ingredients-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.ingredients-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.ingredients-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.ingredient-badge {
+  background-color: #e9f5e9;
+  color: #2c7d2c;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
 }

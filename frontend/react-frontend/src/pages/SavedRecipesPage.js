@@ -42,7 +42,7 @@ const SavedRecipesPage = () => {
               className="saved-recipe-item"
               onClick={() => navigate(`/saved-recipe/${index}`, { state: { recipe } })}
             >
-              {recipe.title || 'Unbenanntes Rezept'}
+              {recipe.titel || 'Unbenanntes Rezept'}
             </li>
           ))}
         </ul>

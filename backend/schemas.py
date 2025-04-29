@@ -10,7 +10,7 @@ class NaehrwerteFormat(BaseModel):
     gesaettigte_fette: float
 
 class RecipeFormat(BaseModel):
-    name: str
+    titel: str
     portionen: int
     zubereitungszeit: str
     naehrwerte_pro_portion: NaehrwerteFormat

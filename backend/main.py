@@ -2,6 +2,7 @@ from fastapi import FastAPI, Body
 from agent import AgentGemini
 from db import Database
 from typing import Dict, Any
+from prompts import Prompts
 
 import dotenv
 import os
@@ -28,11 +29,11 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.3.6"}
+    return {"version": "0.3.7"}
 
 @app.get("/generate_recipe")
-def generate_recipe():
-    recipe = agent.generate_recipe()
+def generate_recipe(data = None):
+    recipe = agent.generate_recipe(data)
     return recipe
 
 @app.post("/save_recipe")
@@ -49,3 +50,9 @@ def save_recipe(recipe: Dict[str, Any] = Body(...)):
 def get_saved_recipes():
     all_recipes = database.get_all_recipes()
     return {"recipes": all_recipes}
+
+@app.post("/ingredients_at_home")
+def ingredients_at_home(data: Dict[str, Any] = Body(...)):
+    ingredients = data.get("ingredients", [])
+    recipe = agent.generate_recipe(ingredients)
+    return recipe

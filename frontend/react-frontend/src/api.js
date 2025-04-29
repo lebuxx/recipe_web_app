@@ -1,13 +1,33 @@
 const API_BASE_URL = 'http://localhost:81'; 
 
-export const fetchNewRecipe = async () => {
+export const fetchNewRecipe = async (ingredients = []) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/generate_recipe`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch recipe');
+    if (ingredients && ingredients.length > 0) {
+      console.log("Sende Rezeptanfrage mit Zutaten:", ingredients); // Debugging line	
+      const response = await fetch(`${API_BASE_URL}/ingredients_at_home`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ingredients }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch recipe');
+      }
+      
+      const data = await response.json();
+      return data.parsed || data;
+    } else {
+      // Ansonsten verwende den ursprünglichen GET-Request
+      console.log("Sende Rezeptanfrage ohne Zutaten");
+      const response = await fetch(`${API_BASE_URL}/generate_recipe`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch recipe');
+      }
+      const data = await response.json();
+      return data.parsed || data;
     }
-    const data = await response.json();
-    return data.parsed || data;
   } catch (error) {
     console.error('Error fetching recipe:', error);
     throw error;
