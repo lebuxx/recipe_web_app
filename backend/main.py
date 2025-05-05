@@ -57,3 +57,12 @@ def ingredients_at_home(data: Dict[str, Any] = Body(...)):
     ingredients = data.get("ingredients", [])
     recipe = agent.generate_recipe(ingredients)
     return recipe
+
+@app.post("/delete_recipe")
+def delete_recipe(recipe_title: str = Body(...)):
+    try:
+        print(f"Received delete request for recipe: {recipe_title}")
+        database.delete_recipe(recipe_title)
+        return {"message": "Recipe deleted successfully"}
+    except Exception as e:
+        return {"error": str(e)}

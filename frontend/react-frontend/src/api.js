@@ -67,3 +67,31 @@ export const fetchSavedRecipes = async () => {
     throw error;
   }
 };
+
+export const deleteRecipe = async (recipeTitle) => {
+  try {
+    console.log('Deleting recipe with title:', recipeTitle);
+    
+    // Send just the string as the body, not wrapped in JSON
+    const response = await fetch(`${API_BASE_URL}/delete_recipe`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',  // Important: set content type to text/plain
+      },
+      body: recipeTitle, // Send just the string, not JSON
+    });
+    
+    console.log('Delete response status:', response.status);
+    
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.error('Server error response:', errorData);
+      throw new Error('Failed to delete recipe: ' + errorData);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Error deleting recipe:', error);
+    throw error;
+  }
+};

@@ -88,3 +88,34 @@ class Database:
             recipes_list.append(formatted_recipe)
         
         return recipes_list
+    
+    def delete_recipe(self, recipe_title):
+        con = sqlite3.connect('saved_recipes.db')
+        cur = con.cursor()
+        try:
+            print(f"Attempting to delete recipe: '{recipe_title}'")
+            
+            # First check if the recipe exists
+            cur.execute("SELECT COUNT(*) FROM recipes WHERE Titel = ?", (recipe_title,))
+            count = cur.fetchone()[0]
+            
+            if count == 0:
+                print(f"Recipe '{recipe_title}' not found in database")
+                con.close()
+                raise ValueError(f"Recipe '{recipe_title}' not found")
+            
+            # Delete the recipe
+            cur.execute("DELETE FROM recipes WHERE Titel = ?", (recipe_title,))
+            con.commit()
+            
+            # Verify deletion
+            rows_affected = cur.rowcount
+            print(f"Deleted recipe '{recipe_title}'. Rows affected: {rows_affected}")
+            
+            return True
+        except Exception as e:
+            print(f"Error deleting recipe '{recipe_title}': {str(e)}")
+            con.rollback()
+            raise
+        finally:
+            con.close()
