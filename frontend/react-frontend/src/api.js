@@ -2,6 +2,7 @@ const API_BASE_URL = 'http://localhost:81';
 
 export const fetchNewRecipe = async (ingredients = []) => {
   try {
+    // Mit Zutaten --> Post-Request
     if (ingredients && ingredients.length > 0) {
       console.log("Sende Rezeptanfrage mit Zutaten:", ingredients); // Debugging line	
       const response = await fetch(`${API_BASE_URL}/ingredients_at_home`, {
@@ -19,7 +20,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
       const data = await response.json();
       return data.parsed || data;
     } else {
-      // Ansonsten verwende den ursprünglichen GET-Request
+      // Ohne Zutaten --> ursprünglichen GET-Request
       console.log("Sende Rezeptanfrage ohne Zutaten");
       const response = await fetch(`${API_BASE_URL}/generate_recipe`);
       if (!response.ok) {

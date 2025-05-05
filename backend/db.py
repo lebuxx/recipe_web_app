@@ -7,7 +7,29 @@ class Database:
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
         cur.execute(("CREATE TABLE IF NOT EXISTS recipes(Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps)"))
+        cur.execute("CREATE TABLE IF NOT EXISTS previous_recipes_temp(Titel)")
         con.close()
+
+    def save_recipes_temp(self, recipe):
+        con = sqlite3.connect('saved_recipes.db')
+        try:
+            cur = con.cursor()
+            # Check if there are already 7 recipes
+            cur.execute("SELECT COUNT(*) FROM previous_recipes_temp")
+            count = cur.fetchone()[0]
+            if count >= 7:
+                # Delete the oldest recipe
+                cur.execute("DELETE FROM previous_recipes_temp WHERE rowid = (SELECT rowid FROM previous_recipes_temp ORDER BY rowid ASC LIMIT 1)")
+            cur.execute(
+                "INSERT INTO previous_recipes_temp (Titel) VALUES (?)",
+                (recipe.parsed.titel,)
+            )
+            con.commit()
+            print("Rezept temporär gespeichert")
+        except Exception as e:
+            print("Fehler beim Speichern des Rezepts:", e)
+        finally:
+            con.close()
 
     def save_recipe(self, recipe):
         con = sqlite3.connect('saved_recipes.db')
@@ -16,7 +38,7 @@ class Database:
             cur.execute(
                 "INSERT INTO recipes (Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps) VALUES (?, ?, ?, ?, ?, ?)",
                     (
-                str(recipe['titel']),  # Access as dictionary
+                str(recipe['titel']), 
                 json.dumps(recipe['portionen']),
                 json.dumps(recipe['zubereitungszeit']),
                 json.dumps(recipe['zutaten']),
@@ -32,10 +54,15 @@ class Database:
             con.close()
 
 
-    def get_previous_recipes():
+    def get_previous_generated_recipes():
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
-        cur.execute("SELECT Titel FROM recipes ORDER BY rowid DESC LIMIT 7")
+        # Debugging
+        cur.execute("SELECT Titel FROM previous_recipes_temp")
+        all_titles = [row[0] for row in cur.fetchall()]
+        for title in all_titles:
+            print(title)
+        cur.execute("SELECT Titel FROM previous_recipes_temp ORDER BY rowid DESC LIMIT 7")
         last_titles = [row[0] for row in cur.fetchall()]
         return last_titles
     

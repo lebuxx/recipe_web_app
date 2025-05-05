@@ -29,11 +29,12 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.3.7"}
+    return {"version": "0.4.7"}
 
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
     recipe = agent.generate_recipe(data)
+    database.save_recipes_temp(recipe)
     return recipe
 
 @app.post("/save_recipe")

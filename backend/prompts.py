@@ -34,7 +34,7 @@ class Prompts:
         """
 
     def prompt_extension_previous_recipes():
-        last_titles = Database.get_previous_recipes()
+        last_titles = Database.get_previous_generated_recipes()
         if last_titles:
             prompt_extension = ("\nWichtig: Das neue Rezept soll sich von den folgenden bereits existierenden Rezepten unterscheiden: " +
                                 ", ".join(last_titles))
@@ -43,7 +43,7 @@ class Prompts:
         return prompt_extension
     
     def prompt_extension_ingredients_at_home(ingredients: list):
-        if ingredients and len(ingredients) > 0:
+        if ingredients:
             prompt_extension = f"Hier sind Zutaten die gerade Zuhause sind. Diese sollen in dem Rezeptvorschlag verwendet werden: {', '.join(ingredients)}"
         else:
             prompt_extension = ""

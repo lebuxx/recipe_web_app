@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { fetchNewRecipe, saveRecipe } from '../api';
 
+
+
 const NewRecipePage = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);

@@ -13,7 +13,8 @@ const SavedRecipesPage = () => {
       setLoading(true);
       try {
         const data = await fetchSavedRecipes();
-        setRecipes(data.recipes || []);
+        const reversedRecipes = [...(data.recipes || [])].reverse();
+        setRecipes(reversedRecipes);
         setError(null);
       } catch (err) {
         setError('Fehler beim Laden der gespeicherten Rezepte. Bitte versuchen Sie es später erneut.');
