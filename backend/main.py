@@ -29,7 +29,7 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.4.7"}
+    return {"version": "0.4.8"}
 
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
@@ -56,6 +56,7 @@ def get_saved_recipes():
 def ingredients_at_home(data: Dict[str, Any] = Body(...)):
     ingredients = data.get("ingredients", [])
     recipe = agent.generate_recipe(ingredients)
+    database.save_recipes_temp(recipe)
     return recipe
 
 @app.post("/delete_recipe")
