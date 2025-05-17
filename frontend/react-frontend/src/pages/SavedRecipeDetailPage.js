@@ -24,7 +24,8 @@ const SavedRecipeDetailPage = () => {
   }
 
   return (
-    <div className="recipe-container">
+    <body className="background-texture">
+      <div className="recipe-container">
       <Link to="/" className="home-icon">🏠</Link>
       <button 
         className="back-button" 
@@ -70,7 +71,9 @@ const SavedRecipeDetailPage = () => {
           </ul>        
         </div>
       )}
-    </div>
+      </div>
+    </body>
+    
   );
 };
 
