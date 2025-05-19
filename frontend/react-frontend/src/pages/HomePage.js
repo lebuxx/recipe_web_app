@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TomatoImage from '../images/Homepage-tomato.png';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ const HomePage = () => {
 
   return (
     <>
+      <div className='homepage-green-background'> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="914" viewBox="0 0 1280 914" fill="none">
+          <path d="M1287.5 199.5C1287.5 402 1287.5 875 1287.5 875C1287.5 875 1133.5 772.5 890 772.5C646.5 772.5 497.868 943.234 312 909.5C126.132 875.766 -2.49992 786 -2.49992 786C-2.49992 786 -2.50007 96.5 -2.49996 87.0003C-2.49752 -130.129 367.616 124.005 508.5 164.5C649.383 204.995 743.415 242.429 890 243.5C1036.58 244.571 1204 137 1287.5 199.5Z" fill="#3EA65B"/>
+        </svg>
+      </div>
       <div className="background-texture"></div>
       <div className="home-container">
        <div className="title-container">
@@ -28,7 +34,7 @@ const HomePage = () => {
             <span>vorschlagen!</span>
           </h1>
           <img 
-            src="../images/Homepage-tomato.png" 
+            src={TomatoImage}
             alt="Tomato" 
             className="tomato-image"
           />
