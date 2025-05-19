@@ -52,28 +52,34 @@ const NewRecipePage = () => {
 
   if (loading) {
     return (
-      <div className="recipe-container">
-        <Link to="/" className="home-icon">🏠</Link>
-        <div className="recipe-title">Rezept wird geladen...</div>
-      </div>
+      <>
+          <div className="background-texture"></div>
+        <div className="recipe-container">
+          <Link to="/" className="home-icon">🏠</Link>
+          <div className="recipe-loading">Rezept wird geladen...</div>
+        </div>
+      </>
     );
   }
 
   if (error) {
     return (
-      <div className="recipe-container">
-        <Link to="/" className="home-icon">🏠</Link>
-        <div className="recipe-title">Fehler</div>
-        <p>{error}</p>
-        <div className="recipe-buttons">
-          <button 
-            className="btn btn-primary" 
-            onClick={handleGenerateNewRecipe}
-          >
-            Erneut versuchen
-          </button>
-        </div>
-      </div>
+       <>
+          <div className="background-texture"></div>
+          <div className="recipe-container">
+            <Link to="/" className="home-icon">🏠</Link>
+            <div className="recipe-title">Fehler</div>
+            <p>{error}</p>
+            <div className="recipe-buttons">
+              <button 
+                className="btn btn-primary" 
+                onClick={handleGenerateNewRecipe}
+              >
+                Erneut versuchen
+              </button>
+            </div>
+          </div>
+        </>
     );
   }
 
@@ -82,84 +88,87 @@ const NewRecipePage = () => {
   }
 
   return (
-    <div className="recipe-container">
-      <Link to="/" className="home-icon">🏠</Link>
-      <h1 className="recipe-title">{recipe.titel}</h1>
-      
-      {/* Zeige verwendete Zutaten an, wenn vorhanden */}
-      {ingredients && ingredients.length > 0 && (
-        <div className="ingredients-used">
-          <h3>Verwendete Zutaten von zuhause:</h3>
-          <div className="ingredients-badges">
-            {ingredients.map((ingredient, index) => (
-              <span key={index} className="ingredient-badge">{ingredient}</span>
-            ))}
+    <>
+      <div className="background-texture"></div>
+      <div className="recipe-container">
+        <Link to="/" className="home-icon">🏠</Link>
+        <h1 className="recipe-title">{recipe.titel}</h1>
+        
+        {/* Zeige verwendete Zutaten an, wenn vorhanden */}
+        {ingredients && ingredients.length > 0 && (
+          <div className="ingredients-used">
+            <h3>Verwendete Zutaten von zuhause:</h3>
+            <div className="ingredients-badges">
+              {ingredients.map((ingredient, index) => (
+                <span key={index} className="ingredient-badge">{ingredient}</span>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-      
-      <div className="recipe-meta">
-        <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>
-        <p>Portionen: {recipe.portionen}</p>
-      </div>
-      
-      <div className="recipe-content">
-        <div className="recipe-content-section">
-          <h3>Zutaten:</h3>
-          <ul className="ingredients-list">
-            {recipe.zutaten && recipe.zutaten.map((zutat, index) => (
-              <li key={index}>{zutat}</li>
-            ))}
-          </ul>
+        )}
+        
+        <div className="recipe-meta">
+          <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>
+          <p>Portionen: {recipe.portionen}</p>
         </div>
         
-        <div className="recipe-content-section">
-          <h3>Zubereitungsschritte:</h3>
-          <ol className="steps-list">
-            {recipe.zubereitungsschritte && recipe.zubereitungsschritte.map((schritt, index) => (
-              <li key={index}>{schritt}</li>
-            ))}
-          </ol>
+        <div className="recipe-content">
+          <div className="recipe-content-section">
+            <h3>Zutaten:</h3>
+            <ul className="ingredients-list">
+              {recipe.zutaten && recipe.zutaten.map((zutat, index) => (
+                <li key={index}>{zutat}</li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="recipe-content-section">
+            <h3>Zubereitungsschritte:</h3>
+            <ol className="steps-list">
+              {recipe.zubereitungsschritte && recipe.zubereitungsschritte.map((schritt, index) => (
+                <li key={index}>{schritt}</li>
+              ))}
+            </ol>
+          </div>
         </div>
+        
+        {recipe.tipps && (
+          <div className="recipe-tip">
+              <ul>
+                  {recipe.tipps.map((tipp, index) => (
+                  <li key={index}>{tipp}</li>
+                  ))}
+            </ul>        
+          </div>
+        )}
+        
+        {!saved ? (
+          <div className="recipe-buttons">
+            <button 
+              className="btn btn-primary" 
+              onClick={handleGenerateNewRecipe}
+            >
+              Neues Rezept
+            </button>
+            <button 
+              className="btn btn-secondary" 
+              onClick={handleSaveRecipe}
+            >
+              Speichern
+            </button>
+          </div>
+        ) : (
+          <div className="recipe-buttons">
+            <button 
+              className="btn btn-primary" 
+              onClick={handleGenerateNewRecipe}
+            >
+              Neues Rezept
+            </button>
+            <p>Rezept wurde erfolgreich gespeichert!</p>
+          </div>
+        )}
       </div>
-      
-      {recipe.tipps && (
-        <div className="recipe-tip">
-            <ul>
-                {recipe.tipps.map((tipp, index) => (
-                <li key={index}>{tipp}</li>
-                ))}
-          </ul>        
-        </div>
-      )}
-      
-      {!saved ? (
-        <div className="recipe-buttons">
-          <button 
-            className="btn btn-primary" 
-            onClick={handleGenerateNewRecipe}
-          >
-            Neues Rezept
-          </button>
-          <button 
-            className="btn btn-secondary" 
-            onClick={handleSaveRecipe}
-          >
-            Speichern
-          </button>
-        </div>
-      ) : (
-        <div className="recipe-buttons">
-          <button 
-            className="btn btn-primary" 
-            onClick={handleGenerateNewRecipe}
-          >
-            Neues Rezept
-          </button>
-          <p>Rezept wurde erfolgreich gespeichert!</p>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 

@@ -72,60 +72,67 @@ const SavedRecipesPage = () => {
   };
 
   return (
-    <div className="recipe-container">
-      <Link to="/" className="home-icon">🏠</Link>
-      <h1 className="recipe-title">Deine kulinarische Schatztruhe</h1>
+     <>
+      <div className="background-texture"></div>
+      <div className="recipe-container">
+        <Link to="/" className="home-icon">🏠</Link>
+        <h1 className="saved-recipe-title">
+          <span>Deine</span> 
+          <span>kulinarische</span> 
+          <span>Schatztruhe</span>
+        </h1>
 
-      {loading ? (
-        <p>Rezepte werden geladen...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : recipes.length > 0 ? (
-        <ul className="saved-recipes-list">
-          {recipes.map((recipe, index) => (
-            <li 
-              key={index} 
-              className="saved-recipe-item"
-              onClick={() => handleRecipeClick(recipe, index)}
-            >
-              <span className="recipe-title-text">{recipe.titel || 'Unbenanntes Rezept'}</span>
-              <span 
-                className="delete-recipe-btn"
-                onClick={(e) => handleDeleteClick(e, recipe)}
+        {loading ? (
+          <p>Rezepte werden geladen...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : recipes.length > 0 ? (
+          <ul className="saved-recipes-list">
+            {recipes.map((recipe, index) => (
+              <li 
+                key={index} 
+                className="saved-recipe-item"
+                onClick={() => handleRecipeClick(recipe, index)}
               >
-                x
-              </span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Keine gespeicherten Rezepte gefunden.</p>
-      )}
+                <span className="recipe-title-text">{recipe.titel || 'Unbenanntes Rezept'}</span>
+                <span 
+                  className="delete-recipe-btn"
+                  onClick={(e) => handleDeleteClick(e, recipe)}
+                >
+                  x
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Keine gespeicherten Rezepte gefunden.</p>
+        )}
 
-      {showDeleteConfirm && (
-        <div className="delete-confirmation-overlay">
-          <div className="delete-confirmation-modal">
-            <p>Möchtest du dieses Rezept wirklich löschen?</p>
-            <p><strong>{recipeToDelete?.titel}</strong></p>
-            <div className="delete-confirmation-buttons">
-              <button 
-                className="cancel-button"
-                onClick={handleCancelDelete}
-              >
-                Abbruch
-              </button>
-              <button 
-                className="delete-button"
-                onClick={handleConfirmDelete}
-              >
-                Löschen
-              </button>
+        {showDeleteConfirm && (
+          <div className="delete-confirmation-overlay">
+            <div className="delete-confirmation-modal">
+              <p>Möchtest du dieses Rezept wirklich löschen?</p>
+              <p><strong>{recipeToDelete?.titel}</strong></p>
+              <div className="delete-confirmation-buttons">
+                <button 
+                  className="cancel-button"
+                  onClick={handleCancelDelete}
+                >
+                  Abbruch
+                </button>
+                <button 
+                  className="delete-button"
+                  onClick={handleConfirmDelete}
+                >
+                  Löschen
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-    </div>
+      </div>
+    </>
   );
 };
 

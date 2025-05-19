@@ -24,7 +24,8 @@ const SavedRecipeDetailPage = () => {
   }
 
   return (
-    <body className="background-texture">
+     <>
+      <div className="background-texture"></div>
       <div className="recipe-container">
       <Link to="/" className="home-icon">🏠</Link>
       <button 
@@ -63,7 +64,7 @@ const SavedRecipeDetailPage = () => {
       
       {recipe.tipps && (
         <div className="recipe-tip">
-          <h3>Tipps:</h3>
+          {/* <h3>Tipps:</h3> */}
           <ul>
             {recipe.tipps.map((tipp, index) => (
               <li key={index}>{tipp}</li>
@@ -72,7 +73,7 @@ const SavedRecipeDetailPage = () => {
         </div>
       )}
       </div>
-    </body>
+    </>
     
   );
 };

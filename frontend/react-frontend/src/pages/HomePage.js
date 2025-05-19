@@ -20,18 +20,30 @@ const HomePage = () => {
     <>
       <div className="background-texture"></div>
       <div className="home-container">
-        <h1 className="home-title">Lass dir gesunde <span>Rezepte vorschlagen!</span></h1>
+       <div className="title-container">
+          <h1 className="home-title">
+            <span>Lass dir </span> 
+            <span>gesunde </span>
+            <span>Rezepte </span>
+            <span>vorschlagen!</span>
+          </h1>
+          <img 
+            src="../images/Homepage-tomato.png" 
+            alt="Tomato" 
+            className="tomato-image"
+          />
+        </div>
 
         <div className="ingredients-input-container">
-          <label htmlFor="ingredients" className="ingredients-label">
+          {/* <label htmlFor="ingredients" className="ingredients-label">
             Möchtest du bestimmte Zutaten verwenden? (mit Komma getrennt)
-          </label>
+          </label> */}
           <textarea
             id="ingredients"
             className="ingredients-input"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            placeholder="z.B. Kartoffeln, Zwiebeln, Paprika"
+            placeholder="Schreibe welche Zutaten du benutzen möchtest ( z.B. Kartoffeln, Zwiebeln, Paprika )"
             rows={3}
           />
         </div>
