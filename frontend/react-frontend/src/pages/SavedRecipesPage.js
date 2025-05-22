@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchSavedRecipes, deleteRecipe } from '../api';
 
@@ -9,6 +9,8 @@ const SavedRecipesPage = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [recipeToDelete, setRecipeToDelete] = useState(null);
   const navigate = useNavigate();
+  const containerRef = useRef(null);
+  const backgroundRef = useRef(null);
 
   const loadSavedRecipes = async () => {
     setLoading(true);
@@ -27,6 +29,57 @@ const SavedRecipesPage = () => {
   useEffect(() => {
     loadSavedRecipes();
   }, []);
+  
+  // Effekt für das SVG-Hintergrundmuster
+  useEffect(() => {
+    // SVG-Höhe
+    const SVG_HEIGHT = 911; // Höhe des SVGs in Pixeln
+    
+    const updateSvgBackground = () => {
+      if (!containerRef.current || !backgroundRef.current) return;
+      
+      // Höhe des Containers ermitteln
+      const containerHeight = Math.max(
+        document.documentElement.scrollHeight, 
+        document.body.scrollHeight
+      );
+      
+      // Bestehende SVG-Elemente entfernen
+      while (backgroundRef.current.firstChild) {
+        backgroundRef.current.removeChild(backgroundRef.current.firstChild);
+      }
+      
+      // Anzahl der benötigten SVGs berechnen
+      const svgCount = Math.ceil(containerHeight / SVG_HEIGHT) ; // +1 für Überlappung
+      
+      // SVG-Elemente erzeugen und einfügen
+      for (let i = 0; i < svgCount; i++) {
+        const svgPattern = document.createElement('div');
+        svgPattern.className = 'saved-recipe-green-pattern';
+        svgPattern.style.top = `${(i * SVG_HEIGHT) - (i > 0 ? 1 : 0)}px`;
+        
+        // Sicherstellen, dass das SVG absolut am rechten Rand ist
+        svgPattern.style.right = '0';
+        svgPattern.style.left = 'auto';
+        
+        backgroundRef.current.appendChild(svgPattern);
+      }
+    };
+    
+    // Initial ausführen
+    updateSvgBackground();
+    
+    // Bei Fenstergrößenänderung neu berechnen
+    window.addEventListener('resize', updateSvgBackground);
+    
+    // Nach kurzer Verzögerung erneut ausführen, falls Content Loading die Größe verändert
+    const timeoutId = setTimeout(updateSvgBackground, 500);
+    
+    return () => {
+      window.removeEventListener('resize', updateSvgBackground);
+      clearTimeout(timeoutId);
+    };
+  }, [recipes, loading]); // Abhängigkeit von recipes und loading
 
   const handleRecipeClick = (recipe, index) => {
     navigate(`/saved-recipe/${index}`, { state: { recipe } });
@@ -73,8 +126,9 @@ const SavedRecipesPage = () => {
 
   return (
      <>
+      <div className='saved-recipe-green-background js-enabled' ref={backgroundRef} style={{right: 0, left: 'auto'}}></div>
       <div className="background-texture"></div>
-      <div className="recipe-container">
+      <div className="recipe-container" ref={containerRef}>
         <Link to="/" className="home-icon">🏠</Link>
         <h1 className="saved-recipe-title">
           <span>Deine</span> 

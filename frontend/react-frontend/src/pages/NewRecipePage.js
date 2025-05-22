@@ -56,7 +56,7 @@ const NewRecipePage = () => {
           <div className="background-texture"></div>
         <div className="recipe-container">
           <Link to="/" className="home-icon">🏠</Link>
-          <div className="recipe-loading">Rezept wird geladen...</div>
+          <div className="recipe-loading">Rezept wird generiert...</div>
         </div>
       </>
     );
