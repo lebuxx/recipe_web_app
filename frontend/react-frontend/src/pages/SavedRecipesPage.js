@@ -30,56 +30,44 @@ const SavedRecipesPage = () => {
     loadSavedRecipes();
   }, []);
   
-  // Effekt für das SVG-Hintergrundmuster
+  // background SVG logic 
   useEffect(() => {
-    // SVG-Höhe
-    const SVG_HEIGHT = 911; // Höhe des SVGs in Pixeln
+    const SVG_HEIGHT = 911; 
     
     const updateSvgBackground = () => {
       if (!containerRef.current || !backgroundRef.current) return;
       
-      // Höhe des Containers ermitteln
+      // calculate the height of the container
       const containerHeight = Math.max(
         document.documentElement.scrollHeight, 
         document.body.scrollHeight
       );
       
-      // Bestehende SVG-Elemente entfernen
       while (backgroundRef.current.firstChild) {
         backgroundRef.current.removeChild(backgroundRef.current.firstChild);
       }
       
-      // Anzahl der benötigten SVGs berechnen
-      const svgCount = Math.ceil(containerHeight / SVG_HEIGHT) ; // +1 für Überlappung
+      // calculate how many SVGs are needed to cover the container height
+      const svgCount = Math.ceil(containerHeight / SVG_HEIGHT) ; 
       
-      // SVG-Elemente erzeugen und einfügen
       for (let i = 0; i < svgCount; i++) {
         const svgPattern = document.createElement('div');
         svgPattern.className = 'saved-recipe-green-pattern';
         svgPattern.style.top = `${(i * SVG_HEIGHT) - (i > 0 ? 1 : 0)}px`;
-        
-        // Sicherstellen, dass das SVG absolut am rechten Rand ist
-        svgPattern.style.right = '0';
-        svgPattern.style.left = 'auto';
-        
         backgroundRef.current.appendChild(svgPattern);
       }
     };
     
-    // Initial ausführen
     updateSvgBackground();
-    
-    // Bei Fenstergrößenänderung neu berechnen
+    // Update on window resize
     window.addEventListener('resize', updateSvgBackground);
-    
-    // Nach kurzer Verzögerung erneut ausführen, falls Content Loading die Größe verändert
-    const timeoutId = setTimeout(updateSvgBackground, 500);
+        const timeoutId = setTimeout(updateSvgBackground, 500);
     
     return () => {
       window.removeEventListener('resize', updateSvgBackground);
       clearTimeout(timeoutId);
     };
-  }, [recipes, loading]); // Abhängigkeit von recipes und loading
+  }, [recipes, loading]); 
 
   const handleRecipeClick = (recipe, index) => {
     navigate(`/saved-recipe/${index}`, { state: { recipe } });
@@ -102,16 +90,12 @@ const SavedRecipesPage = () => {
       await deleteRecipe(recipeToDelete.titel);
       console.log('Recipe deleted successfully');
       
-      // Reload the recipes after deletion
       loadSavedRecipes();
-      setError(null); // Clear any previous errors
+      setError(null); 
       
     } catch (err) {
       console.error('Error in handleConfirmDelete:', err);
       setError(`Fehler beim Löschen des Rezepts: ${err.message}`);
-      
-      // Even if there's an error, we should still reload the recipes
-      // to make sure our UI is in sync with the backend
       loadSavedRecipes();
     } finally {
       setShowDeleteConfirm(false);

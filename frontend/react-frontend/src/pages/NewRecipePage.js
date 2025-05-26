@@ -111,7 +111,7 @@ const NewRecipePage = () => {
           </div>
         )}
         
-        <div className="recipe-meta">
+        <div className="recipe-information">
           <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>
           <p>Portionen: {recipe.portionen}</p>
         </div>

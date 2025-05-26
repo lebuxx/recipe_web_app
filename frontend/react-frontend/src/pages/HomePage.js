@@ -42,9 +42,7 @@ const HomePage = () => {
         </div>
 
         <div className="ingredients-input-container">
-          {/* <label htmlFor="ingredients" className="ingredients-label">
-            Möchtest du bestimmte Zutaten verwenden? (mit Komma getrennt)
-          </label> */}
+
           <textarea
             id="ingredients"
             className="ingredients-input"
