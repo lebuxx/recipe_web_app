@@ -301,6 +301,16 @@ h1 span{
   color: #333;
 }
 
+.folder-icon {
+  font-size: 1.5rem;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  left: auto;
+  cursor: pointer;
+  color: #333;
+}
+
 .saved-recipe-title{
   font-size: 7rem;
   color: #333333;
@@ -466,6 +476,7 @@ h1 span{
   min-height: 30px;
   height: 30px;
   }
+  
 
 .ingredients-badges {
   display: flex;
@@ -475,13 +486,12 @@ h1 span{
 }
 
 .ingredient-badge {
-  background-color: #e9f5e9;
-  color: #2c7d2c;
+  background-color: #cceccc;
+  color: #3EA65B;
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 14px;
 } 
-
 
 .background-texture {
   position: fixed;
@@ -717,6 +727,7 @@ h1 span{
     top: 15px;
     right: 15px;
   }
+
 }
 
 /* Sehr kleine Geräte */

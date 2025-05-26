@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TomatoImage from '../images/Homepage-tomato.png';
 
 const HomePage = () => {
@@ -26,6 +26,7 @@ const HomePage = () => {
       </div>
       <div className="background-texture"></div>
       <div className="home-container">
+        <Link to="/saved-recipes" className="folder-icon">🔖</Link>
        <div className="title-container">
           <h1 className="home-title">
             <span>Lass dir </span> 
@@ -57,9 +58,6 @@ const HomePage = () => {
         <div className="home-buttons">
           <button className="btn btn-primary" onClick={handleNewRecipe}>
             Neues Rezept
-          </button>
-          <button className="btn btn-secondary" onClick={() => navigate('/saved-recipes')}>
-            Gespeicherte Rezepte
           </button>
         </div>
       </div>
