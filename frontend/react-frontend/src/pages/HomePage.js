@@ -5,7 +5,7 @@ import TomatoImage from '../images/Homepage-tomato.png';
 const HomePage = () => {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useState('');
-  const [portion_size, setPortionSize] = useState(); // Default portion size
+  // const [portion_size, setPortionSize] = useState(); 
 
   const handleNewRecipe = () => {
     // If there are ingredients, pass them as state when navigating
@@ -13,14 +13,14 @@ const HomePage = () => {
       navigate('/new-recipe', { 
         state: { 
           ingredients: ingredients.split(',').map(item => item.trim()),
-          portion_size: parseInt(portion_size)
+          // portion_size: parseInt(portion_size)
         } 
       });
     } else {
       navigate('/new-recipe',{
-        state: { 
-          portion_size: parseInt(portion_size)
-        }
+        // state: { 
+        //   portion_size: parseInt(portion_size)
+        // }
       });
     }
   };
@@ -58,19 +58,6 @@ const HomePage = () => {
             rows={3}
           />
         </div>        
-        <div className="portion-input-container">
-          <input
-          type='number'
-            id="portion_size"
-            className="portion-input"
-            value={portion_size}
-            onChange={(e) => setPortionSize(e.target.value)}
-            placeholder="Wie viele Portionen?"
-            min="1"
-            max="10"
-            step="1"
-          />
-        </div>
 
         <div className="home-buttons">
           <button className="btn btn-primary" onClick={handleNewRecipe}>

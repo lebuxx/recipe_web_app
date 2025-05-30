@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SavedRecipeDetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { recipe } = location.state || {};
+  const [portions, setPortions] = useState(1); 
+  
+
+  const formatZutat = (zutat) => {
+
+    const { menge, einheit, zutat: name } = zutat;
+
+    const skalierteMenge = Math.round(menge * portions * 100) / 100;
+    
+    // Spezialbehandlung für Mengen = 0 oder spezielle Einheiten
+    if (menge === 0 || einheit === 'nach Bedarf') {
+      return `${einheit} ${name}`;
+    }
+    
+    // // Spezialbehandlung für Dezimalwerte in einheit (wie "0.5", "0.25")
+    // if (menge === 0 && (einheit === '0.5' || einheit === '0.25' || einheit.includes('.'))) {
+    //   return `${einheit} ${name}`;
+    // }
+    
+    return `${skalierteMenge} ${einheit} ${name}`;
+  };
 
   if (!recipe) {
     return (
@@ -43,15 +64,23 @@ const SavedRecipeDetailPage = () => {
       
       <div className="recipe-information">
         <p>Bearbeitungszeit: {recipe.bearbeitungszeit || '30 Minuten'}</p>
-        <p>Portionen: {recipe.portionen || '4'}</p>
-      </div>
+          <label>
+            Portionen:{" "}
+            <input className='portion-input'
+              type="number"
+              min="1"
+              value={portions}
+              onChange={(e) => setPortions(parseInt(e.target.value) || 1)}
+            />
+          </label>        
+        </div>
       
       <div className="recipe-content">
         <div className="recipe-content-section">
           <h3>Zutaten:</h3>
           <ul className="ingredients-list">
             {recipe.zutaten && recipe.zutaten.map((zutat, index) => (
-              <li key={index}>{zutat}</li>
+              <li key={index}>{formatZutat(zutat)}</li>
             ))}
           </ul>
         </div>

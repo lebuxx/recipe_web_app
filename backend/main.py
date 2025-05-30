@@ -30,7 +30,7 @@ database = Database()
 
 @app.get("/")
 def hello():
-    return {"version": "0.4.8"}
+    return {"version": "0.5.0"}
 
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
@@ -56,22 +56,22 @@ def get_saved_recipes():
 @app.post("/ingredients_at_home")
 def ingredients_at_home(data: IngredientsRequest):
     ingredients = data.ingredients
-    portion_size = data.portion_size if data.portion_size else 1
+    # portion_size = data.portion_size if data.portion_size else 1
     
-    print(f"Received ingredients: {ingredients}, portion_size: {portion_size}")  # Debug
+    print(f"Received ingredients: {ingredients}")  # Debug
     
-    recipe = agent.generate_recipe(portion_size=portion_size, ingredients=ingredients)
+    recipe = agent.generate_recipe(ingredients=ingredients)
     database.save_recipes_temp(recipe)
     return recipe
 
-@app.post("/portion_size")
-def get_portion_size(data: PortionRequest):
-    portion_size = data.portion_size
-    print(f"Received portion_size: {portion_size}")  # Debug
+# @app.post("/portion_size")
+# def get_portion_size(data: PortionRequest):
+#     portion_size = data.portion_size
+#     print(f"Received portion_size: {portion_size}")  # Debug
     
-    recipe = agent.generate_recipe(portion_size=portion_size)
-    database.save_recipes_temp(recipe)
-    return recipe
+#     recipe = agent.generate_recipe(portion_size=portion_size)
+#     database.save_recipes_temp(recipe)
+#     return recipe
 
 @app.post("/delete_recipe")
 def delete_recipe(recipe_title: str = Body(...)):

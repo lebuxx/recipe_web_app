@@ -29,7 +29,8 @@ class Prompts:
         Es kann vegetarisch oder vegan sein, kann aber auch mit gesundem Fleisch oder Fisch sein. Es sollte aber auch leicht abwandelbar für verschiedene Ernährungsstile sein (z. B. durch optionale Zugabe von Fleisch, Fisch oder pflanzlicher Alternativen).
         Ergänzende Infos:
 
-        Gib die geschätzten Nährwerte pro Portion (Kalorien, Eiweiß, Fett, Kohlenhydrate).
+        Gebe die Menge der Zutaten als float-Wert an, die deutsche Einheit der Zutat (z.B. "g", "ml", "EL") und den Namen der Zutat als String.
+        Die Mengenangaben sollen für 1 Portion berechnet sein.
 
         """
     @staticmethod
@@ -42,13 +43,13 @@ class Prompts:
             prompt_extension = ""
         return prompt_extension
     
-    @staticmethod
-    def prompt_extension_portion_size(portion_size: int):
-        if portion_size:
-            prompt_extension = f"Die Mengenangaben sollen für {portion_size} Portionen berechnet sein."
-        else:
-            prompt_extension = "Die Mengenangaben sollen für 1 Portion berechnet sein."
-        return prompt_extension
+    # @staticmethod
+    # def prompt_extension_portion_size(portion_size: int):
+    #     if portion_size:
+    #         prompt_extension = f"Die Mengenangaben sollen für {portion_size} Portionen berechnet sein."
+    #     else:
+    #         prompt_extension = "Die Mengenangaben sollen für 1 Portion berechnet sein."
+    #     return prompt_extension
     
     @staticmethod
     def prompt_extension_ingredients_at_home(ingredients: list):
@@ -59,8 +60,8 @@ class Prompts:
         return prompt_extension
     
     @staticmethod
-    def generating_prompt(ingredients: list = None, portion_size: int = None) -> str:
-        prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_portion_size(portion_size) + " " + Prompts.prompt_extension_previous_recipes()
+    def generating_prompt(ingredients: list = None) -> str:
+        prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_previous_recipes()
         print("Prompt:", prompt)  # Debugging Line
         return prompt
     

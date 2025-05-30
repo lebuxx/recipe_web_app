@@ -9,6 +9,8 @@ const NewRecipePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [portions, setPortions] = useState(1); 
+
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -52,6 +54,25 @@ const NewRecipePage = () => {
   const handleGenerateNewRecipe = () => {
     // Original-Verhalten: Neues Rezept auf derselben Seite generieren
     getRecipe();
+  };
+
+  const formatZutat = (zutat) => {
+
+    const { menge, einheit, zutat: name } = zutat;
+
+    const skalierteMenge = Math.round(menge * portions * 100) / 100;
+    
+    // Spezialbehandlung für Mengen = 0 oder spezielle Einheiten
+    if (menge === 0 || einheit === 'nach Bedarf') {
+      return `${einheit} ${name}`;
+    }
+    
+    // // Spezialbehandlung für Dezimalwerte in einheit (wie "0.5", "0.25")
+    // if (menge === 0 && (einheit === '0.5' || einheit === '0.25' || einheit.includes('.'))) {
+    //   return `${einheit} ${name}`;
+    // }
+    
+    return `${skalierteMenge} ${einheit} ${name}`;
   };
 
   if (loading) {
@@ -116,7 +137,15 @@ const NewRecipePage = () => {
         
         <div className="recipe-information">
           <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>
-          <p>Portionen: {recipe.portionen}</p>
+          <label>
+            Portionen:{" "}
+            <input className='portion-input'
+              type="number"
+              min="1"
+              value={portions}
+              onChange={(e) => setPortions(parseInt(e.target.value) || 1)}
+            />
+          </label>        
         </div>
         
         <div className="recipe-content">
@@ -124,7 +153,7 @@ const NewRecipePage = () => {
             <h3>Zutaten:</h3>
             <ul className="ingredients-list">
               {recipe.zutaten && recipe.zutaten.map((zutat, index) => (
-                <li key={index}>{zutat}</li>
+                <li key={index}>{formatZutat(zutat)}</li>
               ))}
             </ul>
           </div>

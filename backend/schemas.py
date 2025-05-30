@@ -10,17 +10,20 @@ class NaehrwerteFormat(BaseModel):
     ungesaettigte_fette: float
     gesaettigte_fette: float
 
+class ZutatenFormat(BaseModel):
+    menge: float
+    einheit: str
+    zutat: str
+
 class RecipeFormat(BaseModel):
     titel: str
     portionen: int
     zubereitungszeit: str
     naehrwerte_pro_portion: NaehrwerteFormat
-    zutaten: list[str]
+    zutaten: list[ZutatenFormat]
     zubereitungsschritte: list[str]
     tipps: list[str]
 
-class PortionRequest(BaseModel):
-    portion_size: int = 1
 
 class IngredientsRequest(BaseModel):
     ingredients: list[str] 

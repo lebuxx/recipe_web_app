@@ -29,11 +29,8 @@ const SavedRecipesPage = () => {
   }, []);
 
   useEffect(() => {
-  // CSS-Klasse beim Mounten hinzufügen
   document.body.classList.add('saved-recipes-page');
-  
-  // CSS-Klasse beim Unmounten entfernen
-  return () => {
+    return () => {
     document.body.classList.remove('saved-recipes-page');
   };
 }, []);
