@@ -3,6 +3,7 @@ from agent import AgentGemini
 from db import Database
 from typing import Dict, Any
 from prompts import Prompts
+from schemas import PortionRequest, IngredientsRequest
 
 import dotenv
 import os
@@ -53,9 +54,22 @@ def get_saved_recipes():
     return {"recipes": all_recipes}
 
 @app.post("/ingredients_at_home")
-def ingredients_at_home(data: Dict[str, Any] = Body(...)):
-    ingredients = data.get("ingredients", [])
-    recipe = agent.generate_recipe(ingredients)
+def ingredients_at_home(data: IngredientsRequest):
+    ingredients = data.ingredients
+    portion_size = data.portion_size if data.portion_size else 1
+    
+    print(f"Received ingredients: {ingredients}, portion_size: {portion_size}")  # Debug
+    
+    recipe = agent.generate_recipe(portion_size=portion_size, ingredients=ingredients)
+    database.save_recipes_temp(recipe)
+    return recipe
+
+@app.post("/portion_size")
+def get_portion_size(data: PortionRequest):
+    portion_size = data.portion_size
+    print(f"Received portion_size: {portion_size}")  # Debug
+    
+    recipe = agent.generate_recipe(portion_size=portion_size)
     database.save_recipes_temp(recipe)
     return recipe
 

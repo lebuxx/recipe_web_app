@@ -12,14 +12,18 @@ const NewRecipePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Zutaten aus location state holen, wenn vorhanden
+  // Zutaten und portion_size aus location state holen, wenn vorhanden
   const ingredients = location.state?.ingredients || [];
+  const portion_size = location.state?.portion_size || 1;
+
+  console.log("NewRecipePage - Received ingredients:", ingredients, "portion_size:", portion_size); // Debug
+
 
   const getRecipe = async () => {
     setLoading(true);
     try {
-      // Übergebe ingredients an fetchNewRecipe - auch wenn es ein leeres Array ist
-      const data = await fetchNewRecipe(ingredients);
+      // Übergebe beie Parameter an fetchNewRecipe - auch wenn es ein leeres Array ist
+      const data = await fetchNewRecipe(ingredients, portion_size);
       console.log("Neues Rezept:", data);
       setRecipe(data);
       setError(null);
@@ -53,7 +57,6 @@ const NewRecipePage = () => {
   if (loading) {
     return (
       <>
-          <div className="background-texture"></div>
         <div className="recipe-container">
           <Link to="/" className="home-icon">🏠</Link>
           <div className="recipe-loading">Rezept wird generiert...</div>

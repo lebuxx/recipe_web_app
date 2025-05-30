@@ -1,16 +1,20 @@
 const API_BASE_URL = 'http://localhost:81'; 
 
-export const fetchNewRecipe = async (ingredients = []) => {
+export const fetchNewRecipe = async (ingredients = [], portion_size = 1) => {
   try {
-    // Mit Zutaten --> Post-Request
+
+     // Mit Zutaten --> Post-Request mit beiden Parametern
     if (ingredients && ingredients.length > 0) {
-      console.log("Sende Rezeptanfrage mit Zutaten:", ingredients); // Debugging line	
+      console.log("Sende Rezeptanfrage mit Zutaten:", ingredients, "und Portionsgröße:", portion_size);
       const response = await fetch(`${API_BASE_URL}/ingredients_at_home`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ingredients }),
+        body: JSON.stringify({ 
+          ingredients: ingredients,
+          portion_size: portion_size 
+        }),
       });
       
       if (!response.ok) {
@@ -21,8 +25,19 @@ export const fetchNewRecipe = async (ingredients = []) => {
       return data.parsed || data;
     } else {
       // Ohne Zutaten --> ursprünglichen GET-Request
-      console.log("Sende Rezeptanfrage ohne Zutaten");
-      const response = await fetch(`${API_BASE_URL}/generate_recipe`);
+      // console.log("Sende Rezeptanfrage ohne Zutaten");
+      // const response = await fetch(`${API_BASE_URL}/generate_recipe`);
+
+ // Ohne Zutaten aber mit Portionsgröße --> post-Request
+      console.log("Sende Rezeptanfrage ohne Zutaten, aber mit Portionsgröße:", portion_size);
+      const response = await fetch(`${API_BASE_URL}/portion_size`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ portion_size: portion_size }),
+      });
+
       if (!response.ok) {
         throw new Error('Failed to fetch recipe');
       }

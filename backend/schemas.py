@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class NaehrwerteFormat(BaseModel):
@@ -17,3 +18,10 @@ class RecipeFormat(BaseModel):
     zutaten: list[str]
     zubereitungsschritte: list[str]
     tipps: list[str]
+
+class PortionRequest(BaseModel):
+    portion_size: int = 1
+
+class IngredientsRequest(BaseModel):
+    ingredients: list[str] 
+    portion_size: Optional[int] = 1

@@ -5,15 +5,23 @@ import TomatoImage from '../images/Homepage-tomato.png';
 const HomePage = () => {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useState('');
+  const [portion_size, setPortionSize] = useState(); // Default portion size
 
   const handleNewRecipe = () => {
     // If there are ingredients, pass them as state when navigating
     if (ingredients.trim()) {
       navigate('/new-recipe', { 
-        state: { ingredients: ingredients.split(',').map(item => item.trim()) } 
+        state: { 
+          ingredients: ingredients.split(',').map(item => item.trim()),
+          portion_size: parseInt(portion_size)
+        } 
       });
     } else {
-      navigate('/new-recipe');
+      navigate('/new-recipe',{
+        state: { 
+          portion_size: parseInt(portion_size)
+        }
+      });
     }
   };
 
@@ -24,7 +32,6 @@ const HomePage = () => {
           <path d="M1287.5 199.5C1287.5 402 1287.5 875 1287.5 875C1287.5 875 1133.5 772.5 890 772.5C646.5 772.5 497.868 943.234 312 909.5C126.132 875.766 -2.49992 786 -2.49992 786C-2.49992 786 -2.50007 96.5 -2.49996 87.0003C-2.49752 -130.129 367.616 124.005 508.5 164.5C649.383 204.995 743.415 242.429 890 243.5C1036.58 244.571 1204 137 1287.5 199.5Z" fill="#3EA65B"/>
         </svg>
       </div>
-      <div className="background-texture"></div>
       <div className="home-container">
         <Link to="/saved-recipes" className="folder-icon">🔖</Link>
        <div className="title-container">
@@ -42,7 +49,6 @@ const HomePage = () => {
         </div>
 
         <div className="ingredients-input-container">
-
           <textarea
             id="ingredients"
             className="ingredients-input"
@@ -50,6 +56,19 @@ const HomePage = () => {
             onChange={(e) => setIngredients(e.target.value)}
             placeholder="Schreibe welche Zutaten du benutzen möchtest ( z.B. Kartoffeln, Zwiebeln, Paprika )"
             rows={3}
+          />
+        </div>        
+        <div className="portion-input-container">
+          <input
+          type='number'
+            id="portion_size"
+            className="portion-input"
+            value={portion_size}
+            onChange={(e) => setPortionSize(e.target.value)}
+            placeholder="Wie viele Portionen?"
+            min="1"
+            max="10"
+            step="1"
           />
         </div>
 

@@ -32,7 +32,7 @@ class Prompts:
         Gib die geschätzten Nährwerte pro Portion (Kalorien, Eiweiß, Fett, Kohlenhydrate).
 
         """
-
+    @staticmethod
     def prompt_extension_previous_recipes():
         last_titles = Database.get_previous_generated_recipes()
         if last_titles:
@@ -42,15 +42,25 @@ class Prompts:
             prompt_extension = ""
         return prompt_extension
     
+    @staticmethod
+    def prompt_extension_portion_size(portion_size: int):
+        if portion_size:
+            prompt_extension = f"Die Mengenangaben sollen für {portion_size} Portionen berechnet sein."
+        else:
+            prompt_extension = "Die Mengenangaben sollen für 1 Portion berechnet sein."
+        return prompt_extension
+    
+    @staticmethod
     def prompt_extension_ingredients_at_home(ingredients: list):
         if ingredients:
             prompt_extension = f"Hier sind Zutaten die gerade Zuhause sind. Diese sollen in dem Rezeptvorschlag verwendet werden: {', '.join(ingredients)}"
         else:
             prompt_extension = ""
         return prompt_extension
-
-    def generating_prompt(ingredients: list = None) -> str:
-        prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_previous_recipes()
+    
+    @staticmethod
+    def generating_prompt(ingredients: list = None, portion_size: int = None) -> str:
+        prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_portion_size(portion_size) + " " + Prompts.prompt_extension_previous_recipes()
         print("Prompt:", prompt)  # Debugging Line
         return prompt
     

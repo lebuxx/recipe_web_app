@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchSavedRecipes, deleteRecipe } from '../api';
 
@@ -9,8 +9,6 @@ const SavedRecipesPage = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [recipeToDelete, setRecipeToDelete] = useState(null);
   const navigate = useNavigate();
-  const containerRef = useRef(null);
-  const backgroundRef = useRef(null);
 
   const loadSavedRecipes = async () => {
     setLoading(true);
@@ -29,45 +27,17 @@ const SavedRecipesPage = () => {
   useEffect(() => {
     loadSavedRecipes();
   }, []);
-  
-  // background SVG logic 
+
   useEffect(() => {
-    const SVG_HEIGHT = 911; 
-    
-    const updateSvgBackground = () => {
-      if (!containerRef.current || !backgroundRef.current) return;
-      
-      // calculate the height of the container
-      const containerHeight = Math.max(
-        document.documentElement.scrollHeight, 
-        document.body.scrollHeight
-      );
-      
-      while (backgroundRef.current.firstChild) {
-        backgroundRef.current.removeChild(backgroundRef.current.firstChild);
-      }
-      
-      // calculate how many SVGs are needed to cover the container height
-      const svgCount = Math.ceil(containerHeight / SVG_HEIGHT) ; 
-      
-      for (let i = 0; i < svgCount; i++) {
-        const svgPattern = document.createElement('div');
-        svgPattern.className = 'saved-recipe-green-pattern';
-        svgPattern.style.top = `${(i * SVG_HEIGHT) - (i > 0 ? 1 : 0)}px`;
-        backgroundRef.current.appendChild(svgPattern);
-      }
-    };
-    
-    updateSvgBackground();
-    // Update on window resize
-    window.addEventListener('resize', updateSvgBackground);
-        const timeoutId = setTimeout(updateSvgBackground, 500);
-    
-    return () => {
-      window.removeEventListener('resize', updateSvgBackground);
-      clearTimeout(timeoutId);
-    };
-  }, [recipes, loading]); 
+  // CSS-Klasse beim Mounten hinzufügen
+  document.body.classList.add('saved-recipes-page');
+  
+  // CSS-Klasse beim Unmounten entfernen
+  return () => {
+    document.body.classList.remove('saved-recipes-page');
+  };
+}, []);
+
 
   const handleRecipeClick = (recipe, index) => {
     navigate(`/saved-recipe/${index}`, { state: { recipe } });
@@ -110,9 +80,8 @@ const SavedRecipesPage = () => {
 
   return (
      <>
-      <div className='saved-recipe-green-background js-enabled' ref={backgroundRef} style={{right: 0, left: 'auto'}}></div>
-      <div className="background-texture"></div>
-      <div className="recipe-container" ref={containerRef}>
+      <div className='saved-recipe-green-background'></div>
+      <div className="recipe-container">
         <Link to="/" className="home-icon">🏠</Link>
         <h1 className="saved-recipe-title">
           <span>Deine</span> 
@@ -143,7 +112,12 @@ const SavedRecipesPage = () => {
             ))}
           </ul>
         ) : (
-          <p>Keine gespeicherten Rezepte gefunden.</p>
+          <>
+            <p>Du hast noch keine Rezepte gespeichert.</p>
+            <p>Probiere es aus!</p>
+            <p>Generiere ein neues Rezept und klicke auf speichern.</p>
+            <p>Deine gespeicherten Rezepte werden hier angezeigt.</p>
+          </>
         )}
 
         {showDeleteConfirm && (

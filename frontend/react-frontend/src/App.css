@@ -8,6 +8,10 @@ body {
   padding: 0;
   background-color: #f5f5f5;
   font-size: large;
+  background-image: url(images/Sand-Texture.webp);
+  background-repeat: repeat;        
+  background-size: auto;            
+  background-position: 0 0;
 }
 
 .App {
@@ -16,19 +20,6 @@ body {
 }
 
 /* ==== BACKGROUND ELEMENTS ==== */
-
-.background-texture {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -100;
-  background-image: url(images/Sand-Texture.webp);
-  background-repeat: repeat;        
-  background-size: auto;            
-  background-position: 0 0;
-}
 
 .homepage-green-background{
   position: absolute;
@@ -58,31 +49,6 @@ body {
   display: block;
 }
 
-.saved-recipe-green-background {
-  position: absolute;
-  top: 0;
-  right: 0; 
-  width: 20%;
-  height: 100%;
-  z-index: -2;
-  overflow: visible; 
-}
-
-.saved-recipe-green-pattern {
-  position: absolute;
-  top: auto;
-  right: 0; 
-  left: auto; 
-  width: 100%;
-  height: 911px; 
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="233" height="911" viewBox="0 0 233 911" fill="none"><path d="M0.15381 0C0.15381 0 -4.84517 67 42.1548 93C110.42 130.764 202.154 287.5 149.154 328.5C95.0057 370.388 95.8275 433.834 102.154 502C110.956 596.833 218.666 632.394 149.154 697.5C78.1541 764 156.153 868.9 78.1542 848C0.154808 827.1 0.154804 911 0.154804 911H232.654V0H0.15381Z" fill="%233EA55B"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right top;
-  background-size: contain;
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
 
 /* ===== NAVIGATION ICONS ===== */
 
@@ -178,10 +144,10 @@ h1 span{
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width: 80%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 20%;
   border-radius: 10px;
-  margin-left: auto;
+  margin-left: 73%;
   margin-right: 10%;
 }
 
@@ -201,14 +167,34 @@ h1 span{
   padding: 10px;
   border: 2px solid #333333;
   border-radius: 10px;
-  text-align: right;
+  font-family: Helvetica, sans-serif;  text-align: right;
   font-size: 16px;
   font-style: thin;
   resize: vertical;
   min-height: 30px;
   height: 30px;
-  }
+}
 
+.portion-input-container {
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 30%; 
+  margin-left: auto;
+  margin-right: 10%;
+}
+
+.portion-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #333333;
+  border-radius: 10px;
+  font-family: Helvetica, sans-serif;
+  text-align: right;
+  font-size: 16px;
+  font-style: thin;
+  min-height: 30px;
+  height: 30px;
+}
 
   /* ===== NEW RECIPE PAGE ===== */
 
@@ -231,7 +217,7 @@ h1 span{
   margin: 10rem auto 5rem; 
   text-align: center;
   font-weight: bold;
-  width: 100%;
+  width: 80%;
 }
 
 
@@ -307,6 +293,24 @@ h1 span{
 
 
 /* ===== SAVED RECIPES PAGE ===== */
+
+/* body.saved-recipes-page{
+  background-image:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="233" height="911" viewBox="0 0 233 911" fill="none"><path d="M0.15381 0C0.15381 0 -4.84517 67 42.1548 93C110.42 130.764 202.154 287.5 149.154 328.5C95.0057 370.388 95.8275 433.834 102.154 502C110.956 596.833 218.666 632.394 149.154 697.5C78.1541 764 156.153 868.9 78.1542 848C0.154808 827.1 0.154804 911 0.154804 911H232.654V0H0.15381Z" fill="%233EA55B"/></svg>'), 
+    url('images/Sand-Texture.webp'); 
+  background-repeat: repeat-y, repeat;
+  background-position: right top, 0 0;
+  background-size: 20vw auto, auto;
+} */
+
+body.saved-recipes-page{
+  background-image:
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="233" height="911" viewBox="0 0 233 911" fill="none"><path d="M0.15381 0C0.15381 0 -4.84517 67 42.1548 93C110.42 130.764 202.154 287.5 149.154 328.5C95.0057 370.388 95.8275 433.834 102.154 502C110.956 596.833 218.666 632.394 149.154 697.5C78.1541 764 156.153 868.9 78.1542 848C0.154808 827.1 0.154804 911 0.154804 911H232.654V0H0.15381Z" fill="%233EA55B"/></svg>'), 
+    url('images/Sand-Texture.webp'); 
+  background-repeat: repeat-y, repeat;
+  background-position: right top, 0 0;
+  background-size: 20vw auto, auto;
+}
 
 .saved-recipe-title{
   font-size: 7rem;
@@ -436,6 +440,11 @@ h1 span{
   .tomato-image {
     width: 450px;
   }
+
+  .homepage-green-background {
+    top: 70%;
+    transform: translateY(-10%);
+  }
 }
 
 /* Desktop/Laptop (992px - 1199px) */
@@ -466,7 +475,7 @@ h1 span{
     text-align: right;
   }
   .saved-recipe-green-background{
-    display: none;
+    /* display: none; */
   }
 
 }
@@ -502,7 +511,7 @@ h1 span{
   }
 
   .saved-recipe-green-background{
-  display: none;
+  /* display: none; */
   }
 }
 
@@ -550,7 +559,7 @@ h1 span{
   }
 
   .saved-recipe-green-background{
-    display: none;
+    /* display: none; */
   }
 }
 
@@ -594,7 +603,7 @@ h1 span{
   /*Saved recipes page */
 
   .saved-recipe-green-background{
-  display: none;
+  /* display: none; */
   }
 }
 
@@ -650,7 +659,7 @@ h1 span{
   }
   
   .saved-recipe-green-background {
-   display: none;
+   /* display: none; */
   }
   
   .recipe-container {
@@ -701,6 +710,6 @@ h1 span{
   }
 
   .saved-recipe-green-background{
-  display: none;
+  /* display: none; */
   }
 }
