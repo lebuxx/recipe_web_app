@@ -3,7 +3,7 @@ from agent import AgentGemini
 from db import Database
 from typing import Dict, Any
 from prompts import Prompts
-from schemas import PortionRequest, IngredientsRequest
+from schemas import IngredientsRequest
 
 import dotenv
 import os
