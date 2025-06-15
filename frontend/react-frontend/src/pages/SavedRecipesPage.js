@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchSavedRecipes, deleteRecipe } from '../api';
+import { Home } from '../icons';
 
 const SavedRecipesPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -79,7 +80,9 @@ const SavedRecipesPage = () => {
      <>
       <div className='saved-recipe-green-background'></div>
       <div className="recipe-container">
-        <Link to="/" className="home-icon">🏠</Link>
+        <Link to="/" className="home-icon">
+          <Home />
+        </Link>
         <h1 className="saved-recipe-title">
           <span>Deine</span> 
           <span>kulinarische</span> 

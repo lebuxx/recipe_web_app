@@ -53,7 +53,7 @@ body {
 /* ===== NAVIGATION ICONS ===== */
 
 .home-icon,
-.folder-icon {
+.cookbook-icon {
   font-size: 1.5rem;
   position: fixed;
   top: 20px;
@@ -276,23 +276,14 @@ h1 span{
   line-height: 30px;
 }
 
-.recipe-tip::before {
+/* .recipe-tip::before {
   content: "💡";
   font-size: 2rem;
   margin: 0.5rem;
-}
+} */
 
 
 /* ===== SAVED RECIPES PAGE ===== */
-
-/* body.saved-recipes-page{
-  background-image:
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="233" height="911" viewBox="0 0 233 911" fill="none"><path d="M0.15381 0C0.15381 0 -4.84517 67 42.1548 93C110.42 130.764 202.154 287.5 149.154 328.5C95.0057 370.388 95.8275 433.834 102.154 502C110.956 596.833 218.666 632.394 149.154 697.5C78.1541 764 156.153 868.9 78.1542 848C0.154808 827.1 0.154804 911 0.154804 911H232.654V0H0.15381Z" fill="%233EA55B"/></svg>'), 
-    url('images/Sand-Texture.webp'); 
-  background-repeat: repeat-y, repeat;
-  background-position: right top, 0 0;
-  background-size: 20vw auto, auto;
-} */
 
 body.saved-recipes-page{
   background-image:
@@ -404,6 +395,7 @@ body.saved-recipes-page{
 
 .cancel-button {
   padding: 8px 16px;
+  text-transform: uppercase;
   background-color: #3EA65B;
   color:#F5F4F1;
   border: none;
@@ -413,6 +405,7 @@ body.saved-recipes-page{
 
 .delete-button {
   padding: 8px 16px;
+  text-transform: uppercase;
   background-color:#333333;
   color: #F5F4F1;
   border: none;

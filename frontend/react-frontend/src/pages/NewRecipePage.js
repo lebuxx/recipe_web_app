@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { fetchNewRecipe, saveRecipe } from '../api';
+import { Home, Idea } from '../icons';
 
 
 
@@ -79,7 +80,9 @@ const NewRecipePage = () => {
     return (
       <>
         <div className="recipe-container">
-          <Link to="/" className="home-icon">🏠</Link>
+          <Link to="/" className="home-icon">
+            <Home />
+          </Link>
           <div className="recipe-loading">Rezept wird generiert...</div>
         </div>
       </>
@@ -91,7 +94,9 @@ const NewRecipePage = () => {
        <>
           <div className="background-texture"></div>
           <div className="recipe-container">
-            <Link to="/" className="home-icon">🏠</Link>
+            <Link to="/" className="home-icon">
+              <Home />
+            </Link>
             <div className="recipe-title">Fehler</div>
             <p>{error}</p>
             <div className="recipe-buttons">
@@ -120,7 +125,9 @@ const NewRecipePage = () => {
       </div>
       <div className="background-texture"></div>
       <div className="recipe-container">
-        <Link to="/" className="home-icon">🏠</Link>
+        <Link to="/" className="home-icon">
+          <Home />
+        </Link>
         <h1 className="recipe-title">{recipe.titel}</h1>
         
         {/* Zeige verwendete Zutaten an, wenn vorhanden */}
@@ -170,13 +177,14 @@ const NewRecipePage = () => {
         
         {recipe.tipps && (
           <div className="recipe-tip">
+            <Idea className="recipe-tip-icon" />
               <ul>
                   {recipe.tipps.map((tipp, index) => (
                   <li key={index}>{tipp}</li>
                   ))}
             </ul>        
           </div>
-        )}
+        )} 
         
         {!saved ? (
           <div className="recipe-buttons">

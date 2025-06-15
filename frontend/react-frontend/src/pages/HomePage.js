@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import TomatoImage from '../images/Homepage-tomato.png';
+import { Cookbook } from '../icons';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ const HomePage = () => {
         </svg>
       </div>
       <div className="home-container">
-        <Link to="/saved-recipes" className="folder-icon">🔖</Link>
+        <Link to="/saved-recipes" className="cookbook-icon">
+          <Cookbook />
+        </Link>
        <div className="title-container">
           <h1 className="home-title">
             <span>Lass dir </span> 

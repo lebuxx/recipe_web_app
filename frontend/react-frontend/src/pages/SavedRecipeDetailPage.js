@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Home } from '../icons';
+
 
 const SavedRecipeDetailPage = () => {
   const location = useLocation();
@@ -30,7 +32,9 @@ const SavedRecipeDetailPage = () => {
   if (!recipe) {
     return (
       <div className="recipe-container">
-        <Link to="/" className="home-icon">🏠</Link>
+        <Link to="/" className="home-icon">
+          <Home />
+        </Link>
         <h1 className="recipe-title">Rezept nicht gefunden</h1>
         <div className="recipe-buttons">
           <button 
@@ -52,7 +56,9 @@ const SavedRecipeDetailPage = () => {
         </svg>
       </div>
       <div className="recipe-container">
-      <Link to="/" className="home-icon">🏠</Link>
+      <Link to="/" className="home-icon">
+        <Home />
+      </Link>
       <button 
         className="back-button" 
         onClick={() => navigate('/saved-recipes')}
