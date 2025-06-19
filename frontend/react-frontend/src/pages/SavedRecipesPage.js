@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchSavedRecipes, deleteRecipe } from '../api';
-import { Home } from '../icons';
+import { Home, Trashcan } from '../icons';
 
 const SavedRecipesPage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -106,7 +106,7 @@ const SavedRecipesPage = () => {
                   className="delete-recipe-btn"
                   onClick={(e) => handleDeleteClick(e, recipe)}
                 >
-                  x
+                  <Trashcan className="trashcan-icon" />
                 </span>
               </li>
             ))}

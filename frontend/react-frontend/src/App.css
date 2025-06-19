@@ -327,9 +327,8 @@ body.saved-recipes-page{
   color: #F5F4F1;
 }
 .saved-recipe-item:hover 
-.delete-recipe-btn {
-  background-color: #F5F4F1;
-  color: #333333;
+.trashcan-icon{
+  color: #F5F4F1;
 }
 
 .saved-recipe-item:hover 
