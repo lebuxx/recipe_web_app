@@ -2,36 +2,31 @@ from db import Database
 
 class Prompts:
     prompt_generating_recipe = """
-        Erstelle ein gesundes, einfaches und ausgewogenes Rezept für ein Mittagsessen oder Abendessen, das sich an den folgenden Kriterien orientiert:
+        Aufgabe:
+        Erstelle ein gesundes, einfaches und ausgewogenes Rezept für ein Mittag- oder Abendessen. Es soll den wissenschaftlichen Standards einer vollwertigen Ernährung entsprechen, wie sie von der Deutschen Gesellschaft für Ernährung (DGE), WHO und anderen Gesundheitsorganisationen empfohlen wird.
 
-        Gesundheitsaspekt:
+        Gesundheitskriterien (Pflicht):
+        - Verwende ausschließlich nährstoffreiche, vollwertige und unverarbeitete Zutaten.
+        - Setze den Fokus auf frisches Gemüse, Vollkornprodukte, Hülsenfrüchte, Nüsse, Samen, pflanzliche Öle sowie hochwertige pflanzliche oder magere tierische Eiweißquellen.
+        - Vermeide: raffinierten Zucker, Weißmehl, hochverarbeitete Lebensmittel, Transfette, gesättigte Fettsäuren in großen Mengen sowie künstliche Zusatzstoffe.
+        - Achte auf ein ausgewogenes Verhältnis der Makronährstoffe:
+            - Komplexe Kohlenhydrate mit hohem Ballaststoffanteil (Verhältnis min. 1:10 Ballaststoffe zu Kohlenhydraten).
+            - Ungesättigte Fette (vor allem einfach & mehrfach ungesättigt, z. B. Olivenöl, Leinöl, Avocado, Nüsse).
+            - Hochwertige Eiweißquellen (pflanzlich oder mager tierisch, falls pflanzliches Eiweiß verwendet wird, kombiniere verschiedene Quellen (z. B. Hülsenfrüchte + Vollkorn) zur Optimierung des Aminosäurenprofils).
+        - Vermeide übermäßigen Salzgebrauch – stattdessen: frische oder getrocknete Kräuter, Gewürze, Zitrus, Knoblauch, Essig oder Senf als Geschmacksverstärker.
 
-        Verwende ausschließlich nährstoffreiche, vollwertige Zutaten (z. B. frisches Gemüse, Vollkornprodukte, Hülsenfrüchte, hochwertige pflanzliche oder magere tierische Eiweißquellen).
+        Praktikabilität (Pflicht):
+        - Das Rezept muss in maximal 30 Minuten (inkl. Vorbereitung & Kochen) umsetzbar sein.
+        - Die Zutatenliste soll maximal 10 Hauptzutaten enthalten (Öl und Gewürze nicht mitgerechnet).
+        - Die Zubereitung soll klar und in einfachen Schritten beschrieben sein.
 
-        Vermeide verarbeitete Lebensmittel, raffinierten Zucker, Weißmehl, gesättigte Fette sowie künstliche Zusatzstoffe.
+        Flexibilität (Pflicht):
+        - Gebe Tipps und Alternativen an (z.B. vegetarische, vegane oder fleisch-/fischhaltige Variationen, oder  Alternativen bei schwer erhältlichen Zutaten).
 
-        Achte auf ein ausgewogenes Verhältnis von Makronährstoffen (komplexe Kohlenhydrate, gesunde Fette und hochwertige Proteine).
-
-        Reduziere den Salzgehalt und schlage stattdessen Gewürze oder Kräuter zur Geschmacksverstärkung vor.
-
-        Einfachheit:
-
-        Das Rezept soll leicht nachzukochen sein, mit klaren, einfachen Schritten.
-
-        Es soll maximal 30 Minuten Zubereitungszeit beanspruchen (Vorbereitung + Kochen).
-
-        Die Zutatenliste soll 10 Zutaten oder weniger enthalten (ohne Gewürze und Öl).
-
-        
-        Gib gerne Alternativen an, falls eine Zutat nicht verfügbar ist.
-
-
-        Es kann vegetarisch oder vegan sein, kann aber auch mit gesundem Fleisch oder Fisch sein. Es sollte aber auch leicht abwandelbar für verschiedene Ernährungsstile sein (z. B. durch optionale Zugabe von Fleisch, Fisch oder pflanzlicher Alternativen).
-        Ergänzende Infos:
-
-        Gebe die Menge der Zutaten als float-Wert an, die deutsche Einheit der Zutat (z.B. "g", "ml", "EL") und den Namen der Zutat als String.
-        Die Mengenangaben sollen für 1 Portion berechnet sein.
-
+        Portionsgröße & Mengenformat:
+        - Berechne alle Mengen für eine Portion.
+        - Gib die Zutaten im Format an:
+            float-Wert + deutsche Einheit (g, ml, EL, TL, Stück) + Name der Zutat (z.B. 80.0 g Vollkornreis, 1.0 EL Olivenöl, 0.5 Stück Zucchini)
         """
     @staticmethod
     def prompt_extension_previous_recipes():
