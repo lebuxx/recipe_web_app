@@ -53,7 +53,7 @@ def get_saved_recipes():
     all_recipes = database.get_all_recipes()
     return {"recipes": all_recipes}
 
-@app.post("/ingredients_at_home")
+@app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
     ingredients = data.ingredients
     # portion_size = data.portion_size if data.portion_size else 1

@@ -10,7 +10,7 @@ from typing import Optional
 #     ungesaettigte_fette: float
 #     gesaettigte_fette: float
 
-class ZutatenFormat(BaseModel):
+class IngredientsFormat(BaseModel):
     menge: float
     einheit: str
     zutat: str
@@ -20,7 +20,7 @@ class RecipeFormat(BaseModel):
     portionen: int
     zubereitungszeit: str
     # naehrwerte_pro_portion: NaehrwerteFormat
-    zutaten: list[ZutatenFormat]
+    zutaten: list[IngredientsFormat]
     zubereitungsschritte: list[str]
     tipps: list[str]
 

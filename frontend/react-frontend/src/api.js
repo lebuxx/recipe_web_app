@@ -6,7 +6,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
      // Mit Zutaten --> Post-Request 
     if (ingredients && ingredients.length > 0) {
       console.log("Sende Rezeptanfrage mit Zutaten:", ingredients, "und Portionsgröße:");
-      const response = await fetch(`${API_BASE_URL}/ingredients_at_home`, {
+      const response = await fetch(`${API_BASE_URL}/generate_recipe_with_ingredients`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
