@@ -6,7 +6,6 @@ import { Cookbook } from '../icons';
 const HomePage = () => {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useState('');
-  // const [portion_size, setPortionSize] = useState(); 
 
   const handleNewRecipe = () => {
     // If there are ingredients, pass them as state when navigating
@@ -14,14 +13,10 @@ const HomePage = () => {
       navigate('/new-recipe', { 
         state: { 
           ingredients: ingredients.split(',').map(item => item.trim()),
-          // portion_size: parseInt(portion_size)
         } 
       });
     } else {
       navigate('/new-recipe',{
-        // state: { 
-        //   portion_size: parseInt(portion_size)
-        // }
       });
     }
   };

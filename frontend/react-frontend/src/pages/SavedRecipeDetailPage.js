@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Home } from '../icons';
+import { Home, Idea } from '../icons';
 
 
 const SavedRecipeDetailPage = () => {
@@ -63,7 +63,7 @@ const SavedRecipeDetailPage = () => {
         className="back-button" 
         onClick={() => navigate('/saved-recipes')}
       >
-        ← 
+        {'\u276E'} 
       </button>
       
       <h1 className="recipe-title">{recipe.titel}</h1>
@@ -103,7 +103,7 @@ const SavedRecipeDetailPage = () => {
       
       {recipe.tipps && (
         <div className="recipe-tip">
-          {/* <h3>Tipps:</h3> */}
+            <Idea className="recipe-tip-icon" />
           <ul>
             {recipe.tipps.map((tipp, index) => (
               <li key={index}>{tipp}</li>

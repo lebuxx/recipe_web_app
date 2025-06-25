@@ -27,4 +27,4 @@ class RecipeFormat(BaseModel):
 
 class IngredientsRequest(BaseModel):
     ingredients: list[str] 
-    portion_size: Optional[int] = 1
+    # portion_size: Optional[int] = 1

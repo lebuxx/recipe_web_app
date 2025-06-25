@@ -38,14 +38,6 @@ class Prompts:
             prompt_extension = ""
         return prompt_extension
     
-    # @staticmethod
-    # def prompt_extension_portion_size(portion_size: int):
-    #     if portion_size:
-    #         prompt_extension = f"Die Mengenangaben sollen für {portion_size} Portionen berechnet sein."
-    #     else:
-    #         prompt_extension = "Die Mengenangaben sollen für 1 Portion berechnet sein."
-    #     return prompt_extension
-    
     @staticmethod
     def prompt_extension_ingredients_at_home(ingredients: list):
         if ingredients:

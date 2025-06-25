@@ -322,29 +322,33 @@ body.saved-recipes-page{
   transition: background-color 0.2s;  
 }
 
+.trashcan-icon {
+  stroke: #333333;
+}
+
 .saved-recipe-item:hover {
   background-color: #333333;
   color: #F5F4F1;
 }
 .saved-recipe-item:hover 
 .trashcan-icon{
-  color: #F5F4F1;
+  stroke: #F5F4F1;
 }
 
 .saved-recipe-item:hover 
-.delete-recipe-btn:hover {
-  background-color: #ea0f0f;
-  color: #F5F4F1;
+.trashcan-icon:hover {
+  /* background-color: #ea0f0f; */
+  stroke: #ea0f0f;
 }
 
-.delete-recipe-btn {
+/* .delete-recipe-btn {
   color: #383838;
   font-weight: bold;
   padding: 2px 8px;
   cursor: pointer;
   border-radius: 50%;
   margin-left: 10px;
-}
+} */
 
     /* saved recipe detail page */
 
@@ -355,8 +359,8 @@ body.saved-recipes-page{
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.5rem;
-  color: #F5F4F1;
+  font-size: 2rem;
+  color: #333333;
   margin-bottom: 1rem;
 }
 

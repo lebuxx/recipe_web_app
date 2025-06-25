@@ -55,23 +55,12 @@ def get_saved_recipes():
 
 @app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
-    ingredients = data.ingredients
-    # portion_size = data.portion_size if data.portion_size else 1
-    
+    ingredients = data.ingredients    
     print(f"Received ingredients: {ingredients}")  # Debug
     
     recipe = agent.generate_recipe(ingredients=ingredients)
     database.save_recipes_temp(recipe)
     return recipe
-
-# @app.post("/portion_size")
-# def get_portion_size(data: PortionRequest):
-#     portion_size = data.portion_size
-#     print(f"Received portion_size: {portion_size}")  # Debug
-    
-#     recipe = agent.generate_recipe(portion_size=portion_size)
-#     database.save_recipes_temp(recipe)
-#     return recipe
 
 @app.post("/delete_recipe")
 def delete_recipe(recipe_title: str = Body(...)):
