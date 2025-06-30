@@ -34,10 +34,10 @@ const HomePage = () => {
         </Link>
        <div className="title-container">
           <h1 className="home-title">
-            <span>Lass dir </span> 
+            {/* <span>Lass dir </span> 
             <span>gesunde </span>
             <span>Rezepte </span>
-            <span>vorschlagen!</span>
+            <span>vorschlagen!</span> */}
           </h1>
           <img 
             src={TomatoImage}
