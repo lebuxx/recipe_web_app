@@ -1,4 +1,4 @@
- @import url('https://fonts.cdnfonts.com/css/helvetica-neue-lt-pro-55');
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-lt-pro-55');
 
 /* ==== BASE STYLES ==== */
 
@@ -15,40 +15,63 @@ body {
 }
 
 .App {
-  max-width: 100vw;
+  max-width: 100%;
   margin: 0 auto;
+  overflow-x: hidden;
 }
 
 /* ==== BACKGROUND ELEMENTS ==== */
 
-.homepage-green-background{
+.input-section-with-background {
+  position: relative;
+  width: 100%;
+}
+
+.title-background-container {
   position: absolute;
-  top: 65%;
-  transform: teanslateY(-10%);
+  /* top: -350px; */
+  top: -200%;
   left: 0;
   width: 100vw;
-  height: auto;
-  z-index: -2;
+  /* height: calc(100% + 350px + 200px); */
+  height: 450%;
+  z-index: -1;
   overflow: hidden;
+}
+
+.ai-section-with-background {
+  position: relative;
+  width: 100%;
+}
+
+.ai-background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none; /* Prevents interaction with background */
 }
 
 .recipe-green-background{
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: auto;
   z-index: -2;
   overflow: hidden;
 }
 
-.homepage-green-background svg, 
+.title-background-container svg, 
+.ai-background-container svg,
 .recipe-green-background svg{
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
 }
-
 
 /* ===== NAVIGATION ICONS ===== */
 
@@ -60,6 +83,7 @@ body {
   right: 20px;
   cursor: pointer;
   color: #333333;
+  z-index: 10; /* Ensure icons are above backgrounds */
 }
 
 /* ===== BUTTONS ===== */
@@ -96,13 +120,14 @@ body {
 /* ===== HOME PAGE ===== */
 
 .home-container {
+  position: relative; /* Important for background positioning */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 80vh;
   text-align: center;
-  position: relative;
+  padding-bottom: 50px; /* Extra space for background extension */
 }
 
 .title-container {
@@ -116,7 +141,8 @@ body {
 }
 
 .home-title {
-  font-size: 9rem;
+  /* font-size: 9rem; */
+  font-size: clamp(4.5rem, 10vw, 12rem);
   color: #333333;
   margin: 0; 
   margin-top: 5rem ;
@@ -124,11 +150,14 @@ body {
   font-weight: bold;
   text-align: left;
   line-height: 1; 
+  position: relative;
+  z-index: 1; /* Ensure title is above background */
 }
 
-/* h1 span{
+h1 span{
   display: block;
-} */
+}
+
  .home-title::before {
   content: "Lass dir\A gesunde\A Rezepte\A vorschlagen!";
   white-space: pre-line;
@@ -138,11 +167,12 @@ body {
 .tomato-image {
   position: absolute;
   top: 45%;
-  left: 80%; 
+  left: 85%; 
   transform: translate(-50%, -50%);
-  width: 400px; 
+  /* width: 400px;  */
+  width: min(80vw, 400px);
   height: auto;
-  z-index: -1;
+  z-index: 1; /* Above background, but below other content */
 }
 
 .home-buttons {
@@ -150,10 +180,14 @@ body {
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  max-width: 20%;
+  /* max-width: 20%; */
+  max-width: 300px;
   border-radius: 10px;
-  margin-left: 73%;
+  /* margin-left: 73%; */
+  margin-left: auto;
   margin-right: 10%;
+  position: relative;
+  z-index: 2; /* Ensure buttons are above background */
 }
 
     /* ingredients input */
@@ -164,7 +198,9 @@ body {
   max-width: 80%; 
   margin-left: auto;
   margin-right: 10%;
-  
+  margin-top: 3rem;
+  position: relative;
+  z-index: 2; /* Ensure input is above background */
 }
 
 .ingredients-input {
@@ -172,12 +208,179 @@ body {
   padding: 10px;
   border: 2px solid #333333;
   border-radius: 10px;
-  font-family: Helvetica, sans-serif;  text-align: right;
+  font-family: Helvetica, sans-serif;  
+  text-align: right;
   font-size: 16px;
   font-style: thin;
   resize: vertical;
   min-height: 30px;
   height: 30px;
+}
+
+    /* info section */
+
+.info-section {
+  width: 100%;
+  max-width: 80%;
+  margin: 20rem auto 4rem auto;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* Ensure content is above background */
+}
+
+/* Override margin for info section inside AI background */
+.ai-section-with-background .info-section {
+  margin: 0 auto;
+  padding: 6rem 0; /* Add padding instead of margin for proper background coverage */
+}
+
+.info-section-title {
+  font-size: 3rem;
+  color: #333333;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-transform: none;
+}
+
+.info-section-subtitle {
+  font-size: 1.2rem;
+  color: #333333;
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.info-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin-top: 5rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  gap: 1.5rem;
+}
+
+.info-icon {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.info-content h3 {
+  font-size: 1.3rem;
+  color: #333333;
+  font-weight: bold;
+  margin: 0 0 0.8rem 0;
+}
+
+.info-content p {
+  font-size: 1rem;
+  color: #333333;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ai-capabilities-section {
+  width: 100%;
+  max-width: 90%;
+  margin: 6rem auto;
+  padding: 1rem 3rem;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2; /* Ensure content is above background */
+}
+
+.ai-capabilities-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #F5F4F1;
+}
+
+.ai-capabilities-intro {
+  font-size: 1.1rem;
+  color: #F5F4F1;
+  text-align: center;
+  margin-bottom: 6rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ai-capabilities-content {
+  margin-bottom: 6rem;
+  text-align: left;
+  background-color: #F5F4F1;
+  padding: 2rem;
+  border-radius: 20px;
+   display: flex; 
+  gap: 1.5rem; 
+  align-items: flex-start; 
+
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ai-can-do {
+  flex: 1; 
+}
+
+.ai-can-do h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  color: #333333;
+}
+
+.ai-can-do p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: #333333;
+}
+
+.ai-final-note {
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 6rem;
+  /* padding-top: 2rem; */
+  /* border-top: 1px solid rgba(51, 51, 51, 0.3); */
+}
+
+.ai-final-note p {
+  font-size: 1.3rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  color: #333333;
 }
 
 
@@ -413,172 +616,229 @@ body.saved-recipes-page{
 }
 
 
-/* ===== RESPONSIVE DESIGN ===== *
+/* ===== RESPONSIVE DESIGN  ===== */
 
-/* Tablets und kleinere Desktops */
-@media (max-width: 1199px) {
+/* TABLET (768px - 1024px) */
+@media (max-width: 1024px) {
+  
+  /* Home Page Adjustments */
   .home-title {
-    font-size: 6rem;
-    color:#ea0f0f
+    /* font-size: clamp(4rem, 9vw, 9rem); */
+    margin-top: 3rem;
   }
   
   .tomato-image {
-    width: 300px;
+    left: 85%;
+    width: min(50vw, 250px);
+  }
+
+  .title-background-container {
+    top: -150%;
+    height: 350%;
   }
   
-  .title-container {
-    margin-bottom: 10rem;
+  .ingredients-input-container {
+    max-width: 85%;
+    margin-right: 10%;
   }
   
-  .homepage-green-background {
-    top: 70%;
+  /* Info Section */
+  .info-section {
+    margin: 15rem auto 4rem auto;
+    max-width: 90%;
   }
   
-  /* Recipe page wird gestapelt */
-  .recipe-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  .info-section-title {
+    font-size: 2.5rem;
   }
   
+  .info-items {
+    gap: 3rem;
+  }
+  
+  /* AI Capabilities */
+  .ai-capabilities-title {
+    font-size: 2.5rem;
+  }
+  
+  .ai-capabilities-section {
+    padding: 1rem 2rem;
+  }
+  
+  /* Recipe Page */
   .recipe-title {
     font-size: 4rem;
-    margin: 8rem auto 4rem;
+    margin: 6rem auto 3rem;
   }
   
   .recipe-container {
     width: 90%;
-    padding: 1.5rem;
   }
   
-  /* Saved recipes */
+  .portion-input {
+    width: 25%;
+  }
+
+   .recipe-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  /* Saved Recipes */
   .saved-recipe-title {
     font-size: 5rem;
-    margin-bottom: 4rem;
-    padding: 0 1rem;
+    margin-bottom: 3rem;
   }
   
-  .saved-recipe-item {
-    padding: 20px 30px;
-    margin-bottom: 20px;
+  body.saved-recipes-page {
+    background-size: 25vw auto, auto;
   }
-} 
+}
 
-/* ===== MOBILE BREAKPOINT (bis 767px) ===== */
-/* Smartphones und kleine Tablets */
-@media (max-width: 767px) {
-  .title-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 4rem;
+/* MOBILE LANDSCAPE / SMALL TABLET (481px - 768px) */
+@media (max-width: 768px) {
+  
+  /* Base adjustments */
+  body {
+    font-size: medium;
   }
   
-  .home-title {
-    font-size: 3rem;
-    text-align: center;
-    margin-top: 2rem;
-    line-height: 1.1;
-    color: aqua;
+  /* Navigation */
+  .home-icon,
+  .cookbook-icon {
+    top: 15px;
+    right: 15px;
+    font-size: 1.3rem;
   }
+  
+  /* Home Page */
+  .home-title {
+    /* font-size: clamp(5rem, 10vw, 8rem); */
+    /* text-align: center; */
+    margin-top: 2rem;
+  }
+  
   
   .tomato-image {
-    width: 180px;
-    left: 50%;
-    top: 30%;
-  }
-  
-  .homepage-green-background {
-    top: 40%;
+    display: none;
   }
   
   .home-buttons {
-    width: 90%;
-    max-width: none;
+    max-width: 100%;
     margin: 0 auto;
+    width: 80%;
   }
   
   .ingredients-input-container {
-    width: 90%;
-    max-width: none;
-    margin: 0 auto 20px auto;
+    max-width: 90%;
+    margin: 0 auto 1rem;
   }
   
-  .ingredients-input {
-    font-size: 14px;
-    padding: 8px;
-    text-align: left;
+  /* Background containers */
+  .title-background-container {
+    top: -200%;
+    height: 400%;
   }
   
-  /* Recipe page */
+  /* Info Section */
+  .info-section {
+    margin: 10rem auto 2rem auto;
+    max-width: 95%;
+  }
+  
+  .info-section-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .info-section-subtitle {
+    font-size: 1.1rem;
+    margin: 2rem auto 3rem;
+  }
+  
+  .info-items {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .info-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  /* AI Capabilities */
+  .ai-capabilities-section {
+    padding: 1rem;
+    max-width: 95%;
+  }
+  
+  .ai-capabilities-title {
+    font-size: 2rem;
+  }
+  
+  .ai-capabilities-intro {
+    margin-bottom: 3rem;
+  }
+  
+  .ai-capabilities-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  .alert-icon {
+    align-self: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Recipe Page */
+  .recipe-title {
+    font-size: 3rem;
+    margin: 8rem auto 2rem;
+    width: 95%;
+  }
+  
+  .recipe-container {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .recipe-information {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  
   .recipe-content {
     flex-direction: column;
     gap: 1rem;
   }
   
-  .recipe-title {
-    font-size: 2.5rem;
-    margin: 4rem auto 3rem;
-    width: 95%;
-    padding: 0 1rem;
-  }
-  
-  .recipe-container {
-    width: 95%;
+  .ingredients-list,
+  .steps-list {
     padding: 1rem;
   }
   
-  .recipe-content-section {
-    padding: 1rem;
+  .recipe-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
-  /* Saved recipes */
+  /* Saved Recipes */
   .saved-recipe-title {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
-    line-height: 1.2;
+    /* text-align: center; */
   }
   
   .saved-recipe-item {
-    padding: 15px 20px;
+    padding: 20px;
     margin-bottom: 15px;
   }
   
-  .home-icon,
-  .cookbook-icon {
-    font-size: 1.2rem;
-    top: 15px;
-    right: 15px;
-  }
-}
-
-/* ===== SEHR KLEINE MOBILE GERÄTE (bis 480px) ===== */
-@media (max-width: 480px) {
-  .home-title {
-    font-size: 2.5rem;
-  }
-  
-  .tomato-image {
-    display: none; /* Auf sehr kleinen Bildschirmen ausblenden */
-  }
-  
-  .home-buttons,
-  .ingredients-input-container {
-    width: 95%;
-  }
-  
-  .recipe-title {
-    font-size: 2rem;
-    margin: 3rem auto 2rem;
-  }
-  
-  .saved-recipe-title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .recipe-container {
-    padding: 0.5rem;
+  body.saved-recipes-page {
+    background-size: 40vw auto, auto;
   }
 }
