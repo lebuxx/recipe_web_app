@@ -52,7 +52,7 @@ body {
   height: 100%;
   z-index: -1;
   overflow: hidden;
-  pointer-events: none; /* Prevents interaction with background */
+  pointer-events: none;
 }
 
 .recipe-green-background{
@@ -83,7 +83,7 @@ body {
   right: 20px;
   cursor: pointer;
   color: #333333;
-  z-index: 10; /* Ensure icons are above backgrounds */
+  z-index: 10;
 }
 
 /* ===== BUTTONS ===== */
@@ -120,14 +120,14 @@ body {
 /* ===== HOME PAGE ===== */
 
 .home-container {
-  position: relative; /* Important for background positioning */
+  position: relative; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 80vh;
   text-align: center;
-  padding-bottom: 50px; /* Extra space for background extension */
+  padding-bottom: 50px; 
 }
 
 .title-container {
@@ -151,14 +151,14 @@ body {
   text-align: left;
   line-height: 1; 
   position: relative;
-  z-index: 1; /* Ensure title is above background */
+  z-index: 1; 
 }
 
 h1 span{
   display: block;
 }
 
- .home-title::before {
+.home-title::before {
   content: "Lass dir\A gesunde\A Rezepte\A vorschlagen!";
   white-space: pre-line;
   display: block;
@@ -172,7 +172,7 @@ h1 span{
   /* width: 400px;  */
   width: min(80vw, 400px);
   height: auto;
-  z-index: 1; /* Above background, but below other content */
+  z-index: 1; 
 }
 
 .home-buttons {
@@ -187,7 +187,7 @@ h1 span{
   margin-left: auto;
   margin-right: 10%;
   position: relative;
-  z-index: 2; /* Ensure buttons are above background */
+  z-index: 2;
 }
 
     /* ingredients input */
@@ -200,7 +200,7 @@ h1 span{
   margin-right: 10%;
   margin-top: 3rem;
   position: relative;
-  z-index: 2; /* Ensure input is above background */
+  z-index: 2; 
 }
 
 .ingredients-input {
@@ -222,16 +222,15 @@ h1 span{
 .info-section {
   width: 100%;
   max-width: 80%;
-  margin: 20rem auto 4rem auto;
+  margin: 25rem auto 4rem auto;
   text-align: center;
   position: relative;
-  z-index: 2; /* Ensure content is above background */
+  z-index: 2; 
 }
 
-/* Override margin for info section inside AI background */
 .ai-section-with-background .info-section {
   margin: 0 auto;
-  padding: 6rem 0; /* Add padding instead of margin for proper background coverage */
+  padding: 6rem 0; 
 }
 
 .info-section-title {
@@ -302,7 +301,7 @@ h1 span{
   padding: 1rem 3rem;
   border-radius: 20px;
   position: relative;
-  z-index: 2; /* Ensure content is above background */
+  z-index: 2; 
 }
 
 .ai-capabilities-title {
@@ -325,7 +324,7 @@ h1 span{
 }
 
 .ai-capabilities-content {
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
   text-align: left;
   background-color: #F5F4F1;
   padding: 2rem;
@@ -621,9 +620,8 @@ body.saved-recipes-page{
 /* TABLET (768px - 1024px) */
 @media (max-width: 1024px) {
   
-  /* Home Page Adjustments */
+  /* Home Page */
   .home-title {
-    /* font-size: clamp(4rem, 9vw, 9rem); */
     margin-top: 3rem;
   }
   
@@ -698,7 +696,6 @@ body.saved-recipes-page{
 /* MOBILE LANDSCAPE / SMALL TABLET (481px - 768px) */
 @media (max-width: 768px) {
   
-  /* Base adjustments */
   body {
     font-size: medium;
   }
@@ -713,8 +710,6 @@ body.saved-recipes-page{
   
   /* Home Page */
   .home-title {
-    /* font-size: clamp(5rem, 10vw, 8rem); */
-    /* text-align: center; */
     margin-top: 2rem;
   }
   
@@ -830,7 +825,6 @@ body.saved-recipes-page{
   .saved-recipe-title {
     font-size: 3.5rem;
     margin-bottom: 2rem;
-    /* text-align: center; */
   }
   
   .saved-recipe-item {
