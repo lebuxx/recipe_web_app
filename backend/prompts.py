@@ -1,6 +1,7 @@
 from db import Database
 
 class Prompts:
+    # Prompt for generating a healthy recipe
     prompt_generating_recipe = """
         Aufgabe:
         Erstelle ein gesundes, einfaches und ausgewogenes Rezept für ein Mittag- oder Abendessen. Es soll den wissenschaftlichen Standards einer vollwertigen Ernährung entsprechen, wie sie von der Deutschen Gesellschaft für Ernährung (DGE), WHO und anderen Gesundheitsorganisationen empfohlen wird.
@@ -28,6 +29,8 @@ class Prompts:
         - Gib die Zutaten im Format an:
             float-Wert + deutsche Einheit (g, ml, EL, TL, Stück) + Name der Zutat (z.B. 80.0 g Vollkornreis, 1.0 EL Olivenöl, 0.5 Stück Zucchini)
         """
+    
+     # Prompt extension for a variation (The new recipe should differ from the seven previous recipes)
     @staticmethod
     def prompt_extension_previous_recipes():
         last_titles = Database.get_previous_generated_recipes()
@@ -38,6 +41,7 @@ class Prompts:
             prompt_extension = ""
         return prompt_extension
     
+    # Prompt extension for ingredients (The ingredients that were entered should be used in the recipe suggestion)
     @staticmethod
     def prompt_extension_ingredients_at_home(ingredients: list):
         if ingredients:
@@ -46,9 +50,10 @@ class Prompts:
             prompt_extension = ""
         return prompt_extension
     
+    # The final prompt for generating a recipe with the extensions
     @staticmethod
     def generating_prompt(ingredients: list = None) -> str:
         prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_previous_recipes()
-        print("Prompt:", prompt)  # Debugging Line
+        print("Prompt:", prompt)  # Debugging 
         return prompt
     

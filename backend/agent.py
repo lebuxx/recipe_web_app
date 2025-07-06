@@ -4,15 +4,13 @@ from prompts import Prompts
 from schemas import RecipeFormat
 import sqlite3
 
-
+# Class for interacting with the Gemini API to generate recipes
 class AgentGemini:
     def __init__(self, api_key: str):
         self.client = genai.Client(api_key=api_key)
 
     def generate_recipe(self, ingredients: list = None, ) -> RecipeFormat:
-        # if portion_size is None:
-        #     portion_size = 1
-            
+  
         print(f"Agent generiert Rezept - Zutaten: {ingredients}")  # Debugging
         
         completion = self.client.models.generate_content(

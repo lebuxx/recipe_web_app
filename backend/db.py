@@ -6,10 +6,13 @@ class Database:
     def __init__(self):
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
+        # Table recipes for storing the saved recipes
         cur.execute(("CREATE TABLE IF NOT EXISTS recipes(Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps)"))
+        # Table previous_recipes_temp for storing the last 7 recipe titles automatically for using them in the prompt extension
         cur.execute("CREATE TABLE IF NOT EXISTS previous_recipes_temp(Titel)")
         con.close()
 
+    # saves the last recipe in the table previous_recipes_temp and deletes the oldest recipe if there are already 7 recipes
     def save_recipes_temp(self, recipe):
         con = sqlite3.connect('saved_recipes.db')
         try:
@@ -31,6 +34,7 @@ class Database:
         finally:
             con.close()
 
+    # saves the recipe in the table recipes if user clicks on "Rezept speichern"
     def save_recipe(self, recipe):
         con = sqlite3.connect('saved_recipes.db')
         try:
@@ -53,7 +57,7 @@ class Database:
         finally:
             con.close()
 
-
+    # gets the recipe titles from the table previous_recipes_temp for the prompt extension
     def get_previous_generated_recipes():
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
@@ -66,8 +70,7 @@ class Database:
         last_titles = [row[0] for row in cur.fetchall()]
         return last_titles
     
-
-    
+    # gets all recipes from the table recipes for displaying them on the Saved Recipes page
     def get_all_recipes(self):
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
@@ -89,13 +92,13 @@ class Database:
         
         return recipes_list
     
+    # deletes a recipe from the table recipes by its title
     def delete_recipe(self, recipe_title):
         con = sqlite3.connect('saved_recipes.db')
         cur = con.cursor()
         try:
             print(f"Attempting to delete recipe: '{recipe_title}'")
             
-            # First check if the recipe exists
             cur.execute("SELECT COUNT(*) FROM recipes WHERE Titel = ?", (recipe_title,))
             count = cur.fetchone()[0]
             
@@ -104,14 +107,12 @@ class Database:
                 con.close()
                 raise ValueError(f"Recipe '{recipe_title}' not found")
             
-            # Delete the recipe
             cur.execute("DELETE FROM recipes WHERE Titel = ?", (recipe_title,))
             con.commit()
             
-            # Verify deletion
             rows_affected = cur.rowcount
             print(f"Deleted recipe '{recipe_title}'. Rows affected: {rows_affected}")
-            
+
             return True
         except Exception as e:
             print(f"Error deleting recipe '{recipe_title}': {str(e)}")

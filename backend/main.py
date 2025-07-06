@@ -20,10 +20,11 @@ app.add_middleware(
 )
 
 
-
+# load API key from .env file
 dotenv.load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
+# Initialize the agent and database
 agent = AgentGemini(api_key=api_key)
 database = Database()
 
@@ -32,27 +33,14 @@ database = Database()
 def hello():
     return {"version": "0.5.0"}
 
+# Endpoint to generate a recipe without ingredients
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
     recipe = agent.generate_recipe(data)
     database.save_recipes_temp(recipe)
     return recipe
 
-@app.post("/save_recipe")
-def save_recipe(recipe: Dict[str, Any] = Body(...)):
-    print("Received recipe:", recipe)  # Debug-Ausgabe
-    try:
-        database.save_recipe(recipe)
-        return {"message": "Recipe saved successfully"}
-    except Exception as e:
-        return {"error": str(e)}
-
-
-@app.get("/get_saved_recipes")
-def get_saved_recipes():
-    all_recipes = database.get_all_recipes()
-    return {"recipes": all_recipes}
-
+# Endpoint to generate a recipe with ingredients
 @app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
     ingredients = data.ingredients    
@@ -62,6 +50,23 @@ def ingredients_at_home(data: IngredientsRequest):
     database.save_recipes_temp(recipe)
     return recipe
 
+# Endpoint to get all saved recipes
+@app.get("/get_saved_recipes")
+def get_saved_recipes():
+    all_recipes = database.get_all_recipes()
+    return {"recipes": all_recipes}
+
+# Endpoint to save a recipe
+@app.post("/save_recipe")
+def save_recipe(recipe: Dict[str, Any] = Body(...)):
+    print("Received recipe:", recipe)  # Debug-Ausgabe
+    try:
+        database.save_recipe(recipe)
+        return {"message": "Recipe saved successfully"}
+    except Exception as e:
+        return {"error": str(e)}
+
+# Endpoint to delete a recipe
 @app.post("/delete_recipe")
 def delete_recipe(recipe_title: str = Body(...)):
     try:
