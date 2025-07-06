@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { fetchSavedRecipes, deleteRecipe } from '../api';
 import { Home, Trashcan } from '../icons';
@@ -11,6 +11,7 @@ const SavedRecipesPage = () => {
   const [recipeToDelete, setRecipeToDelete] = useState(null);
   const navigate = useNavigate();
 
+  // Load saved recipes from API
   const loadSavedRecipes = async () => {
     setLoading(true);
     try {
@@ -25,33 +26,37 @@ const SavedRecipesPage = () => {
     }
   };
 
+  // Load saved recipes 
   useEffect(() => {
     loadSavedRecipes();
   }, []);
 
+  // Add body class for styling the green background SVG
   useEffect(() => {
-  document.body.classList.add('saved-recipes-page');
+    document.body.classList.add('saved-recipes-page');
     return () => {
-    document.body.classList.remove('saved-recipes-page');
-  };
-}, []);
+      document.body.classList.remove('saved-recipes-page');
+    };
+  }, []);
 
-
+  // Navigate to recipe detail page
   const handleRecipeClick = (recipe, index) => {
     navigate(`/saved-recipe/${index}`, { state: { recipe } });
   };
 
+  // Handle delete button click - show confirmation modal
   const handleDeleteClick = (e, recipe) => {
     e.stopPropagation();
     setRecipeToDelete(recipe);
     setShowDeleteConfirm(true);
   };
 
+  // Confirm and execute recipe deletion
   const handleConfirmDelete = async () => {
     try {
       console.log('Attempting to delete recipe:', recipeToDelete);
       
-      if (!recipeToDelete || !recipeToDelete.titel) {
+      if (!recipeToDelete?.titel) {
         throw new Error('Recipe title is missing');
       }
       
@@ -71,29 +76,37 @@ const SavedRecipesPage = () => {
     }
   };
 
+  // Cancel deletion process
   const handleCancelDelete = () => {
     setShowDeleteConfirm(false);
     setRecipeToDelete(null);
   };
 
   return (
-     <>
+    <>
+      {/* Green background styling */}
       <div className='saved-recipe-green-background'></div>
+      
       <div className="recipe-container">
+        {/* Home navigation link */}
         <Link to="/" className="home-icon">
           <Home />
         </Link>
+        
+        {/* Page title */}
         <h1 className="saved-recipe-title">
           <span>Deine</span> 
           <span>kulinarische</span> 
           <span>Schatztruhe</span>
         </h1>
 
+        {/* Content based on loading/error/data state */}
         {loading ? (
           <p>Rezepte werden geladen...</p>
         ) : error ? (
           <p>{error}</p>
         ) : recipes.length > 0 ? (
+          // Recipe list display
           <ul className="saved-recipes-list">
             {recipes.map((recipe, index) => (
               <li 
@@ -112,6 +125,7 @@ const SavedRecipesPage = () => {
             ))}
           </ul>
         ) : (
+          // Empty state message
           <>
             <p>Du hast noch keine Rezepte gespeichert.</p>
             <p>Probiere es aus!</p>
@@ -120,6 +134,7 @@ const SavedRecipesPage = () => {
           </>
         )}
 
+        {/* Delete confirmation modal */}
         {showDeleteConfirm && (
           <div className="delete-confirmation-overlay">
             <div className="delete-confirmation-modal">
@@ -142,7 +157,6 @@ const SavedRecipesPage = () => {
             </div>
           </div>
         )}
-
       </div>
     </>
   );

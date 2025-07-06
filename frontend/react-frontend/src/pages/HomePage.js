@@ -7,33 +7,27 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [ingredients, setIngredients] = useState('');
 
+  // Handle navigation to new recipe page with optional ingredients
   const handleNewRecipe = () => {
-    // If there are ingredients, pass them as state when navigating
-    if (ingredients.trim()) {
-      navigate('/new-recipe', { 
-        state: { 
-          ingredients: ingredients.split(',').map(item => item.trim()),
-        } 
-      });
-    } else {
-      navigate('/new-recipe',{
-      });
-    }
+    const navigationState = ingredients.trim() 
+      ? { state: { ingredients: ingredients.split(',').map(item => item.trim()) } }
+      : {};
+    
+    navigate('/new-recipe', navigationState);
   };
 
- return (
+  return (
     <>
+      {/* Main home container */}
       <div className="home-container">
+        {/* Link to saved recipes */}
         <Link to="/saved-recipes" className="cookbook-icon">
           <Cookbook />
         </Link>
-       <div className="title-container">
-          <h1 className="home-title">
-            {/* <span>Lass dir </span> 
-            <span>gesunde </span>
-            <span>Rezepte </span>
-            <span>vorschlagen!</span> */}
-          </h1>
+        
+        {/* Title section with tomato image */}
+        <div className="title-container">
+          <h1 className="home-title"></h1>
           <img 
             src={TomatoImage}
             alt="Tomato" 
@@ -41,15 +35,15 @@ const HomePage = () => {
           />
         </div>
 
-        {/* Input section with background - similar to ai-section-with-background */}
+        {/* Input section with background SVG */}
         <div className="input-section-with-background">
-          {/* Title Background SVG */}
           <div className='title-background-container'> 
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1280 826" fill="none" preserveAspectRatio="none">
              <path d="M1280 143.91C1280 290.196 1280 738 1280 738C1280 738 1146.18 648 904 648C661.821 648 378.359 847.869 193.5 823.5C8.64058 799.131 -2.99995 696.5 -2.99995 696.5C-2.99995 696.5 -3.00006 69.5032 -2.99995 62.6406C-2.99752 -94.2128 365.108 89.3726 505.227 118.626C645.346 147.88 738.868 174.922 884.657 175.696C1030.45 176.469 1196.95 98.7602 1280 143.91Z" fill="#3EA65B"/>
             </svg>
           </div>
 
+          {/* Ingredients input textarea */}
           <div className="ingredients-input-container">
             <textarea
               id="ingredients"
@@ -61,6 +55,7 @@ const HomePage = () => {
             />
           </div>        
 
+          {/* Navigation button new recipe */}
           <div className="home-buttons">
             <button className="btn btn-primary" onClick={handleNewRecipe}>
               Neues Rezept
@@ -69,7 +64,7 @@ const HomePage = () => {
         </div>
       </div>
     
-      {/* Info section */}
+      {/* Information section about healthy recipes */}
       <div className="info-section">
         <h2 className="info-section-title">
           Alles über deine gesunden Rezepte
@@ -122,9 +117,8 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* AI Capabilities - with background */}
+      {/* Information about the limits of the application with background */}
       <div className="ai-section-with-background">
-        {/* AI Background SVG */}
         <div className="ai-background-container">
           <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1280 1233" fill="none" preserveAspectRatio="none">
             <path d="M0 83.193C0 83.193 137.633 10.7088 261 1.68543C376.583 -6.76859 439 18.007 537.5 44.1964C601.953 61.3334 747.037 101.105 872 83.1932C990.762 66.1701 1044 61.65 1113.5 61.65C1183 61.65 1280 105.138 1280 105.138V1054.6C1280 1054.6 1130.1 1145.38 1014.5 1170.99C817.62 1214.62 699.42 1101.93 495.5 1114.95C295.538 1127.73 0 1233 0 1233V83.193Z" fill="#3EA55B"/>
@@ -150,6 +144,7 @@ const HomePage = () => {
                 <p>Spezifische Bedürfnisse (z.B. bei Schwangerschaft, Krankheiten oder besonderen Ernährungszielen) können nicht berücksichtigt werden. </p>
               </div>
             </div>
+            
             <div className="ai-capabilities-content"> 
               <div className="alert-icon">
                 <Alert />
@@ -161,6 +156,7 @@ const HomePage = () => {
                 <p> Eine kurze Prüfung des Rezepts ist immer ratsam.</p>
               </div>
             </div>
+            
             <div className="ai-capabilities-content"> 
               <div className="alert-icon">
                 <Alert />
@@ -175,11 +171,13 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-        <div className="ai-final-note">
-          <p>Die Anwendung ist eine fantastische Inspirationsquelle für deine gesunde Küche.</p>
-          <p>Nutze sie als kreativen Impuls und beachte die genannten Punkte.</p>
-          <p>Bei gesundheitlichen Fragen ist der Rat eines Spezialisten unerlässlich.</p>
-        </div>
+      
+      {/* Final note section */}
+      <div className="ai-final-note">
+        <p>Die Anwendung ist eine fantastische Inspirationsquelle für deine gesunde Küche.</p>
+        <p>Nutze sie als kreativen Impuls und beachte die genannten Punkte.</p>
+        <p>Bei gesundheitlichen Fragen ist der Rat eines Spezialisten unerlässlich.</p>
+      </div>
     </>
   );
 };

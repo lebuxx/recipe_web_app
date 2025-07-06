@@ -41,7 +41,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
 };
 
 export const saveRecipe = async (recipe) => {
-  console.log('recipe:', recipe); // Debugging line
+  console.log('recipe:', recipe); // Debugging 
   try {
     const response = await fetch(`${API_BASE_URL}/save_recipe`, {
       method: 'POST',
