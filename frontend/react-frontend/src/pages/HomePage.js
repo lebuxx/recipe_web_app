@@ -152,7 +152,7 @@ const HomePage = () => {
               <div className="ai-can-do">
                 <h3>KI-Präzision:</h3>
                 <p>Die Künstliche Intelligenz arbeitet mit Wahrscheinlichkeiten.</p>
-                <p>Das bedeutet, es können unrealistische Mengenangaben, unpassende Zubereitungsschritte oder fehlerhafte Zutatenkombinationen vorkommen. </p>
+                <p>Gelegentlich kann es daher zu kleinen Ungenauigkeiten bei Mengen, Zubereitungsschritten oder Zutatenkombinationen kommen.</p>                
                 <p> Eine kurze Prüfung des Rezepts ist immer ratsam.</p>
               </div>
             </div>
