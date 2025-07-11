@@ -13,12 +13,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Oder ["http://localhost"] etwas strenger
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 # load API key from .env file
 dotenv.load_dotenv()
@@ -44,7 +43,7 @@ def generate_recipe(data = None):
 @app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
     ingredients = data.ingredients    
-    print(f"Received ingredients: {ingredients}")  # Debug
+    print(f"Received ingredients: {ingredients}")  # Debugging
     
     recipe = agent.generate_recipe(ingredients=ingredients)
     database.save_recipes_temp(recipe)
@@ -59,7 +58,7 @@ def get_saved_recipes():
 # Endpoint to save a recipe
 @app.post("/save_recipe")
 def save_recipe(recipe: Dict[str, Any] = Body(...)):
-    print("Received recipe:", recipe)  # Debug-Ausgabe
+    print("Received recipe:", recipe)  # Debugging
     try:
         database.save_recipe(recipe)
         return {"message": "Recipe saved successfully"}

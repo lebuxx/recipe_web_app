@@ -1,9 +1,9 @@
 const API_BASE_URL = 'http://localhost:81'; 
 
+// Fetches a new recipe from the backend
 export const fetchNewRecipe = async (ingredients = []) => {
   try {
-
-     // Mit Zutaten --> Post-Request 
+     // Recipe request with ingredients
     if (ingredients && ingredients.length > 0) {
       console.log("Sende Rezeptanfrage mit Zutaten:", ingredients);
       const response = await fetch(`${API_BASE_URL}/generate_recipe_with_ingredients`, {
@@ -24,7 +24,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
       return data.parsed || data;
     } else {
 
-      // Ohne Zutaten --> ursprünglichen GET-Request
+      // Recipe request without ingredients
       console.log("Sende Rezeptanfrage ohne Zutaten");
       const response = await fetch(`${API_BASE_URL}/generate_recipe`);
 
@@ -40,6 +40,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
   }
 };
 
+// Saves a recipe to the backend
 export const saveRecipe = async (recipe) => {
   console.log('recipe:', recipe); // Debugging 
   try {
@@ -60,6 +61,7 @@ export const saveRecipe = async (recipe) => {
   }
 };
 
+// Fetches all saved recipes from the backend
 export const fetchSavedRecipes = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/get_saved_recipes`);
@@ -73,27 +75,24 @@ export const fetchSavedRecipes = async () => {
   }
 };
 
+//Deletes a recipe from the backend
 export const deleteRecipe = async (recipeTitle) => {
   try {
     console.log('Deleting recipe with title:', recipeTitle);
-    
-    // Send just the string as the body, not wrapped in JSON
+
     const response = await fetch(`${API_BASE_URL}/delete_recipe`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'text/plain',  // Important: set content type to text/plain
+        'Content-Type': 'text/plain', 
       },
-      body: recipeTitle, // Send just the string, not JSON
-    });
-    
+      body: recipeTitle, 
+    }); 
     console.log('Delete response status:', response.status);
-    
     if (!response.ok) {
       const errorData = await response.text();
       console.error('Server error response:', errorData);
       throw new Error('Failed to delete recipe: ' + errorData);
     }
-    
     return await response.json();
   } catch (error) {
     console.error('Error deleting recipe:', error);
