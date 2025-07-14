@@ -7,6 +7,6 @@ docker-compose -f deploy.yml down
 docker rmi web-app-backend web-app-frontend -f
 
 # Build and start new containers
-docker-compose -f deploy.yml up --build -d
+docker compose -f deploy.yml up --build -d
 
 docker system prune -af
