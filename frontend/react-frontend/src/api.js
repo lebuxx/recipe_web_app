@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:81'; 
+const API_BASE_URL = 'http://cooki.local:81'; 
 
 // Fetches a new recipe from the backend
 export const fetchNewRecipe = async (ingredients = []) => {

@@ -8,6 +8,8 @@ services:
     image: web-app-backend
     ports:
       - "81:81"
+    volumes:
+      - recipe-db-data:/app
     restart: always
 
   frontend:
@@ -20,3 +22,6 @@ services:
       - "3000:80"
     restart: always
 
+volumes:
+  recipe-db-data:
+    driver: local
