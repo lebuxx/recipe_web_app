@@ -7,6 +7,15 @@ Entstanden als praktischer Teil der Bachelorarbeit **„Mit KI zu einer gesunden
 Automatisierte Rezeptvorschläge für den Alltag“**.
 
 <p align="center">
+  <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.13">
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 18">
+  <img src="https://img.shields.io/badge/Gemini%202.0%20Flash-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Google Gemini 2.0 Flash">
+  <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
+</p>
+
+<p align="center">
   <img src="docs/screenshots/startseite.jpg" alt="Startseite der Recipe Web App" width="820">
 </p>
 
