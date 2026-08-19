@@ -66,9 +66,7 @@ def generate_recipe(data = None):
 # Endpoint to generate a recipe with ingredients
 @app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
-    ingredients = data.ingredients    
-    print(f"Received ingredients: {ingredients}")  # Debugging
-    
+    ingredients = data.ingredients
     recipe = get_agent().generate_recipe(ingredients=ingredients)
     database.save_recipes_temp(recipe)
     return recipe
@@ -82,7 +80,6 @@ def get_saved_recipes():
 # Endpoint to save a recipe
 @app.post("/save_recipe")
 def save_recipe(recipe: Dict[str, Any] = Body(...)):
-    print("Received recipe:", recipe)  # Debugging
     try:
         database.save_recipe(recipe)
         return {"message": "Recipe saved successfully"}
@@ -93,7 +90,6 @@ def save_recipe(recipe: Dict[str, Any] = Body(...)):
 @app.post("/delete_recipe")
 def delete_recipe(recipe_title: str = Body(...)):
     try:
-        print(f"Received delete request for recipe: {recipe_title}")
         database.delete_recipe(recipe_title)
         return {"message": "Recipe deleted successfully"}
     except ValueError as e:

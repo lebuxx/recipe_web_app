@@ -10,9 +10,6 @@ class AgentGemini:
         self.client = genai.Client(api_key=api_key)
 
     def generate_recipe(self, ingredients: list = None, ) -> RecipeFormat:
-  
-        print(f"Agent generiert Rezept - Zutaten: {ingredients}")  # Debugging
-        
         completion = self.client.models.generate_content(
             model="gemini-3.1-flash-lite",
             contents=Prompts.generating_prompt(ingredients),

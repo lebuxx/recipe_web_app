@@ -54,15 +54,11 @@ const SavedRecipesPage = () => {
   // Confirm and execute recipe deletion
   const handleConfirmDelete = async () => {
     try {
-      console.log('Attempting to delete recipe:', recipeToDelete);
-      
       if (!recipeToDelete?.titel) {
         throw new Error('Recipe title is missing');
       }
-      
+
       await deleteRecipe(recipeToDelete.titel);
-      console.log('Recipe deleted successfully');
-      
       loadSavedRecipes();
       setError(null); 
       

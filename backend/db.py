@@ -1,6 +1,10 @@
 import sqlite3
 import json
+import logging
 import os
+
+logger = logging.getLogger(__name__)
+
 DB_PATH = os.getenv("DB_PATH", "saved_recipes.db")
 
 
@@ -30,9 +34,8 @@ class Database:
                 (recipe.parsed.titel,)
             )
             con.commit()
-            print("Rezept temporär gespeichert")
-        except Exception as e:
-            print("Fehler beim Speichern des Rezepts:", e)
+        except Exception:
+            logger.exception("Fehler beim temporären Speichern des Rezepts")
         finally:
             con.close()
 
@@ -53,9 +56,8 @@ class Database:
                     )
             )
             con.commit()
-            print("Rezept gespeichert")
-        except Exception as e:
-            print("Fehler beim Speichern des Rezepts:", e)
+        except Exception:
+            logger.exception("Fehler beim Speichern des Rezepts")
             raise
         finally:
             con.close()
@@ -64,13 +66,9 @@ class Database:
     def get_previous_generated_recipes():
         con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
-        # Debugging
-        cur.execute("SELECT Titel FROM previous_recipes_temp")
-        all_titles = [row[0] for row in cur.fetchall()]
-        for title in all_titles:
-            print(title)
         cur.execute("SELECT Titel FROM previous_recipes_temp ORDER BY rowid DESC LIMIT 7")
         last_titles = [row[0] for row in cur.fetchall()]
+        con.close()
         return last_titles
     
     # gets all recipes from the table recipes for displaying them on the Saved Recipes page
@@ -100,25 +98,20 @@ class Database:
         con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         try:
-            print(f"Attempting to delete recipe: '{recipe_title}'")
-            
             cur.execute("SELECT COUNT(*) FROM recipes WHERE Titel = ?", (recipe_title,))
             count = cur.fetchone()[0]
-            
+
             if count == 0:
-                print(f"Recipe '{recipe_title}' not found in database")
-                con.close()
+                logger.warning("Rezept '%s' nicht gefunden", recipe_title)
                 raise ValueError(f"Recipe '{recipe_title}' not found")
-            
+
             cur.execute("DELETE FROM recipes WHERE Titel = ?", (recipe_title,))
             con.commit()
-            
-            rows_affected = cur.rowcount
-            print(f"Deleted recipe '{recipe_title}'. Rows affected: {rows_affected}")
-
             return True
-        except Exception as e:
-            print(f"Error deleting recipe '{recipe_title}': {str(e)}")
+        except ValueError:
+            raise
+        except Exception:
+            logger.exception("Fehler beim Löschen des Rezepts '%s'", recipe_title)
             con.rollback()
             raise
         finally:

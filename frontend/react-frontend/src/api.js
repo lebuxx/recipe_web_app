@@ -15,7 +15,6 @@ export const fetchNewRecipe = async (ingredients = []) => {
   try {
     // Recipe request with ingredients
     if (ingredients && ingredients.length > 0) {
-      console.log("Sende Rezeptanfrage mit Zutaten:", ingredients);
       const response = await fetch(
         `${API_BASE_URL}/generate_recipe_with_ingredients`,
         {
@@ -37,7 +36,6 @@ export const fetchNewRecipe = async (ingredients = []) => {
       return data.parsed || data;
     } else {
       // Recipe request without ingredients
-      console.log("Sende Rezeptanfrage ohne Zutaten");
       const response = await fetch(`${API_BASE_URL}/generate_recipe`);
 
       if (!response.ok) {
@@ -54,7 +52,6 @@ export const fetchNewRecipe = async (ingredients = []) => {
 
 // Saves a recipe to the backend
 export const saveRecipe = async (recipe) => {
-  console.log("recipe:", recipe); // Debugging
   try {
     const response = await fetch(`${API_BASE_URL}/save_recipe`, {
       method: "POST",
@@ -90,8 +87,6 @@ export const fetchSavedRecipes = async () => {
 //Deletes a recipe from the backend
 export const deleteRecipe = async (recipeTitle) => {
   try {
-    console.log("Deleting recipe with title:", recipeTitle);
-
     const response = await fetch(`${API_BASE_URL}/delete_recipe`, {
       method: "POST",
       headers: {
@@ -99,7 +94,6 @@ export const deleteRecipe = async (recipeTitle) => {
       },
       body: recipeTitle,
     });
-    console.log("Delete response status:", response.status);
     if (!response.ok) {
       const errorData = await response.text();
       console.error("Server error response:", errorData);

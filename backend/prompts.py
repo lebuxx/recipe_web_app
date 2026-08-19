@@ -54,6 +54,5 @@ class Prompts:
     @staticmethod
     def generating_prompt(ingredients: list = None) -> str:
         prompt = Prompts.prompt_generating_recipe + Prompts.prompt_extension_ingredients_at_home(ingredients) + " " + Prompts.prompt_extension_previous_recipes()
-        print("Prompt:", prompt)  # Debugging 
         return prompt
     

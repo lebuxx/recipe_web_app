@@ -18,14 +18,11 @@ const NewRecipePage = () => {
   const ingredients = location.state?.ingredients || EMPTY_INGREDIENTS;
   const portion_size = location.state?.portion_size || 1;
 
-  console.log("NewRecipePage - Received ingredients:", ingredients, "portion_size:", portion_size);
-
   // Fetch new recipe from API
   const getRecipe = useCallback(async () => {
     setLoading(true);
     try {
       const data = await fetchNewRecipe(ingredients, portion_size);
-      console.log("Neues Rezept:", data);
       setRecipe(data);
       setError(null);
       setSaved(false);
