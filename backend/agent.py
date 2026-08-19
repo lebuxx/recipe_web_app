@@ -14,7 +14,7 @@ class AgentGemini:
         print(f"Agent generiert Rezept - Zutaten: {ingredients}")  # Debugging
         
         completion = self.client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-3.1-flash-lite",
             contents=Prompts.generating_prompt(ingredients),
             config={
                 'response_mime_type': 'application/json',

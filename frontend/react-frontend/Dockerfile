@@ -10,8 +10,8 @@ RUN npm run build
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Optional: Eigene Nginx-Konfig, wenn du z. B. Routing brauchst
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Nginx-Konfig
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

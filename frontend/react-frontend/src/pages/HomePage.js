@@ -27,7 +27,7 @@ const HomePage = () => {
         
         {/* Title section with tomato image */}
         <div className="title-container">
-          <h1 className="home-title"></h1>
+          <h1 className="home-title" aria-label="Lass dir gesunde Rezepte vorschlagen!"></h1>
           <img 
             src={TomatoImage}
             alt="Tomato" 

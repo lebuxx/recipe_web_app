@@ -6,14 +6,16 @@ services:
     image: web-app-backend
     ports:
       - "81:81"
+    environment:
+      - DB_PATH=/app/data/saved_recipes.db
     volumes:
-      - recipe-db-data:/app
+      - recipe-db-data:/app/data
     restart: unless-stopped
 
   frontend:
-    build: 
-        context: ./frontend/react-frontend
-        dockerfile: Dockerfile
+    build:
+      context: ./frontend/react-frontend
+      dockerfile: Dockerfile
     image: web-app-frontend
 
     ports:

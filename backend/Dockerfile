@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
+# Directory for the persistent database
+RUN mkdir -p /app/data
+
 # Expose the port that FastAPI will run on
 EXPOSE 81
 

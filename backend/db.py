@@ -1,10 +1,12 @@
 import sqlite3
 import json
+import os
+DB_PATH = os.getenv("DB_PATH", "saved_recipes.db")
 
 
 class Database:
     def __init__(self):
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         # Table recipes for storing the saved recipes
         cur.execute(("CREATE TABLE IF NOT EXISTS recipes(Titel, Portionen, Zubereitungszeit, Zutaten, Zubereitungsschritte, Tipps)"))
@@ -14,7 +16,7 @@ class Database:
 
     # saves the last recipe in the table previous_recipes_temp and deletes the oldest recipe if there are already 7 recipes
     def save_recipes_temp(self, recipe):
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         try:
             cur = con.cursor()
             # Check if there are already 7 recipes
@@ -36,7 +38,7 @@ class Database:
 
     # saves the recipe in the table recipes if user clicks on "Rezept speichern"
     def save_recipe(self, recipe):
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         try:
             cur = con.cursor()
             cur.execute(
@@ -59,7 +61,7 @@ class Database:
 
     # gets the recipe titles from the table previous_recipes_temp for the prompt extension
     def get_previous_generated_recipes():
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         # Debugging
         cur.execute("SELECT Titel FROM previous_recipes_temp")
@@ -72,7 +74,7 @@ class Database:
     
     # gets all recipes from the table recipes for displaying them on the Saved Recipes page
     def get_all_recipes(self):
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         cur.execute("SELECT * FROM recipes")
         raw_recipes = cur.fetchall()
@@ -94,7 +96,7 @@ class Database:
     
     # deletes a recipe from the table recipes by its title
     def delete_recipe(self, recipe_title):
-        con = sqlite3.connect('saved_recipes.db')
+        con = sqlite3.connect(DB_PATH)
         cur = con.cursor()
         try:
             print(f"Attempting to delete recipe: '{recipe_title}'")

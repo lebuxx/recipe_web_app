@@ -1,45 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchNewRecipe, saveRecipe } from '../api';
 import { Home, Idea } from '../icons';
+
+const EMPTY_INGREDIENTS = [];
 
 const NewRecipePage = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [portions, setPortions] = useState(1); 
+  const [portions, setPortions] = useState(1);
 
-  const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Extract ingredients and portion_size from location state if available
-  const ingredients = location.state?.ingredients || [];
+  const ingredients = location.state?.ingredients || EMPTY_INGREDIENTS;
   const portion_size = location.state?.portion_size || 1;
 
   console.log("NewRecipePage - Received ingredients:", ingredients, "portion_size:", portion_size);
 
   // Fetch new recipe from API
-  const getRecipe = async () => {
+  const getRecipe = useCallback(async () => {
     setLoading(true);
     try {
       const data = await fetchNewRecipe(ingredients, portion_size);
       console.log("Neues Rezept:", data);
       setRecipe(data);
       setError(null);
-      setSaved(false); 
+      setSaved(false);
     } catch (err) {
       console.error("Fehler beim Laden des Rezepts:", err);
       setError('Fehler beim Laden des Rezepts. Bitte versuchen Sie es später erneut.');
     } finally {
       setLoading(false);
     }
-  };
+  }, [ingredients, portion_size]);
 
-  // Load recipe 
+  // Load recipe
   useEffect(() => {
     getRecipe();
-  }, []);
+  }, [getRecipe]);
 
   // Save recipe to storage
   const handleSaveRecipe = async () => {

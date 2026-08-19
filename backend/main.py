@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, HTTPException
 from agent import AgentGemini
 from db import Database
 from typing import Dict, Any
@@ -6,14 +6,17 @@ from prompts import Prompts
 from schemas import IngredientsRequest
 
 import dotenv
+import logging
 import os
 from fastapi.middleware.cors import CORSMiddleware
+
+logger = logging.getLogger("uvicorn.error")
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -23,9 +26,30 @@ app.add_middleware(
 dotenv.load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
-# Initialize the agent and database
-agent = AgentGemini(api_key=api_key)
+# Initialize the agent and database. A missing GEMINI_API_KEY must not crash
+# the whole app - instead we keep the API up and fail only the endpoints
+# that actually need Gemini, with a clear message.
+if not api_key:
+    logger.error(
+        "GEMINI_API_KEY ist nicht gesetzt! Bitte die Umgebungsvariable "
+        "GEMINI_API_KEY (z.B. in der .env Datei oder in deploy.yml) setzen. "
+        "Endpunkte zur Rezeptgenerierung sind bis dahin deaktiviert."
+    )
+    agent = None
+else:
+    agent = AgentGemini(api_key=api_key)
+
 database = Database()
+
+
+def get_agent() -> AgentGemini:
+    if agent is None:
+        raise HTTPException(
+            status_code=503,
+            detail="GEMINI_API_KEY ist nicht gesetzt. Bitte die Umgebungsvariable "
+                   "konfigurieren und den Backend-Container neu starten.",
+        )
+    return agent
 
 
 @app.get("/")
@@ -35,7 +59,7 @@ def hello():
 # Endpoint to generate a recipe without ingredients
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
-    recipe = agent.generate_recipe(data)
+    recipe = get_agent().generate_recipe(data)
     database.save_recipes_temp(recipe)
     return recipe
 
@@ -45,7 +69,7 @@ def ingredients_at_home(data: IngredientsRequest):
     ingredients = data.ingredients    
     print(f"Received ingredients: {ingredients}")  # Debugging
     
-    recipe = agent.generate_recipe(ingredients=ingredients)
+    recipe = get_agent().generate_recipe(ingredients=ingredients)
     database.save_recipes_temp(recipe)
     return recipe
 
