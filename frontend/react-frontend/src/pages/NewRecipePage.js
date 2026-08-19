@@ -31,7 +31,7 @@ const NewRecipePage = () => {
       setSaved(false);
     } catch (err) {
       console.error("Fehler beim Laden des Rezepts:", err);
-      setError('Fehler beim Laden des Rezepts. Bitte versuchen Sie es später erneut.');
+      setError(err.message || 'Fehler beim Laden des Rezepts. Bitte versuchen Sie es später erneut.');
     } finally {
       setLoading(false);
     }

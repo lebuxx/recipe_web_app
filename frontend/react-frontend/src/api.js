@@ -1,5 +1,15 @@
 const API_BASE_URL = `http://${window.location.hostname}:81`;
 
+// Reads the FastAPI "detail" field from an error response, if present
+const readErrorDetail = async (response, fallbackMessage) => {
+  try {
+    const data = await response.json();
+    return data.detail || fallbackMessage;
+  } catch {
+    return fallbackMessage;
+  }
+};
+
 // Fetches a new recipe from the backend
 export const fetchNewRecipe = async (ingredients = []) => {
   try {
@@ -20,7 +30,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recipe");
+        throw new Error(await readErrorDetail(response, "Failed to fetch recipe"));
       }
 
       const data = await response.json();
@@ -31,7 +41,7 @@ export const fetchNewRecipe = async (ingredients = []) => {
       const response = await fetch(`${API_BASE_URL}/generate_recipe`);
 
       if (!response.ok) {
-        throw new Error("Failed to fetch recipe");
+        throw new Error(await readErrorDetail(response, "Failed to fetch recipe"));
       }
       const data = await response.json();
       return data.parsed || data;
