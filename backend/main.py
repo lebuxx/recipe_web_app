@@ -87,7 +87,7 @@ def save_recipe(recipe: Dict[str, Any] = Body(...)):
         database.save_recipe(recipe)
         return {"message": "Recipe saved successfully"}
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
 
 # Endpoint to delete a recipe
 @app.post("/delete_recipe")
@@ -96,5 +96,7 @@ def delete_recipe(recipe_title: str = Body(...)):
         print(f"Received delete request for recipe: {recipe_title}")
         database.delete_recipe(recipe_title)
         return {"message": "Recipe deleted successfully"}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=str(e))

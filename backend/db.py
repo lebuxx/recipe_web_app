@@ -56,6 +56,7 @@ class Database:
             print("Rezept gespeichert")
         except Exception as e:
             print("Fehler beim Speichern des Rezepts:", e)
+            raise
         finally:
             con.close()
 
