@@ -10,7 +10,7 @@ Automatisierte Rezeptvorschläge für den Alltag“**.
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.13">
   <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React 18">
-  <img src="https://img.shields.io/badge/Gemini%202.0%20Flash-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Google Gemini 2.0 Flash">
+  <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Google Gemini">
   <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
 </p>
@@ -53,7 +53,15 @@ Herkunft wurde verschwiegen, um Self-Preference-Bias zu vermeiden.
 | claude-3-7-sonnet-20250219 | 119,616                          |
 
 Alle drei Modelle erwiesen sich als grundsätzlich geeignet; die Unterschiede sind gering.
-`gemini-2.0-flash` erreichte die höchste kombinierte Wertung und wird in der Anwendung eingesetzt.
+`gemini-2.0-flash` erreichte die höchste kombinierte Wertung und wurde in der Anwendung eingesetzt.
+
+> **Hinweis zum aktuell eingesetzten Modell:** Der oben beschriebene Modellvergleich ist Teil der
+> Bachelorarbeit und dokumentiert den Stand zum Zeitpunkt der Arbeit. Das damals ausgewählte
+> `gemini-2.0-flash` wird inzwischen (rund ein Jahr später) von Google nicht mehr angeboten. Die
+> Anwendung setzt deshalb aktuell `gemini-3.1-flash-lite` ein (siehe [`backend/agent.py`](backend/agent.py)).
+> Dieses neuere Modell war **nicht Teil des ursprünglichen Vergleichs** und wurde nach derselben
+> Methodik nicht erneut bewertet — die dokumentierte Auswahlmethodik bleibt davon unberührt und ließe
+> sich bei Bedarf unverändert auf das neue Modell anwenden.
 
 ---
 
@@ -117,7 +125,7 @@ flowchart TD
         DB[("SQLite<br/>saved_recipes.db")]
     end
 
-    G["Gemini API<br/>gemini-2.0-flash"]
+    G["Gemini API<br/>gemini-3.1-flash-lite"]
 
     U --> R
     R -- "HTTP / REST" --> A
@@ -152,7 +160,7 @@ recipe_web_app/
 | -------- | --------------------------------------------------------- |
 | Frontend | React 18, React Router 6, CRA, Nginx (Auslieferung)       |
 | Backend  | Python 3.13, FastAPI, Pydantic                            |
-| KI       | Google Gemini API (`gemini-2.0-flash`) via `google-genai` |
+| KI       | Google Gemini API (`gemini-3.1-flash-lite`) via `google-genai` |
 | Daten    | SQLite                                                    |
 | Betrieb  | Docker, Docker Compose                                    |
 
@@ -205,8 +213,6 @@ Für ein vollständiges Neu-Deployment (Container stoppen, alte Images entfernen
 ./deploy.sh
 ```
 
-Unter Windows steht `deploy.ps1` mit identischer Funktion zur Verfügung.
-
 ### Variante B — lokale Entwicklung
 
 Backend:
@@ -221,8 +227,10 @@ Frontend:
 cd frontend/react-frontend && npm install && npm start
 ```
 
-> **Hinweis:** `frontend/react-frontend/src/api.js` enthält die Backend-URL als Konstante
-> (`API_BASE_URL`). Für den lokalen Betrieb dort auf `http://localhost:81` umstellen.
+> **Hinweis:** Das Frontend leitet die Backend-URL in [`src/api.js`](frontend/react-frontend/src/api.js)
+> automatisch aus dem aktuellen Host ab (`http://<hostname>:81`). Beim lokalen Start löst das zu
+> `http://localhost:81` auf – es ist also keine manuelle Anpassung nötig. Nur wenn das Backend auf
+> einem anderen Host oder Port läuft, muss diese Zeile angepasst werden.
 
 ---
 

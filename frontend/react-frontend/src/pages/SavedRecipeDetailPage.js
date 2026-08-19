@@ -69,7 +69,7 @@ const SavedRecipeDetailPage = () => {
         
         {/* Recipe information (preparation time and portion size) */}
         <div className="recipe-information">
-          <p>Bearbeitungszeit: {recipe.bearbeitungszeit || '30 Minuten'}</p>
+          <p>Bearbeitungszeit: {recipe.zubereitungszeit}</p>
           <label>
             Portionen:{" "}
             <input 

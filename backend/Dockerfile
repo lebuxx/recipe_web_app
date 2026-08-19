@@ -1,4 +1,4 @@
-# Use an official Python 3.11 image that supports ARM
+# Use an official Python 3.13 image that supports ARM
 FROM python:3.13-slim
 
 # Set a working directory
