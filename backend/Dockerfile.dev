@@ -1,4 +1,4 @@
-# Dev-Variante: startet mit --reload, Code wird per Volume gemountet statt kopiert
+# Dev variant: starts with --reload, code is mounted via a volume instead of copied
 FROM python:3.13-slim
 
 WORKDIR /app

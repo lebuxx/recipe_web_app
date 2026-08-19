@@ -1,4 +1,4 @@
-# Dev-Variante: CRA-Dev-Server mit Hot-Reload statt Nginx-Production-Build
+# Dev variant: CRA dev server with hot reload instead of the Nginx production build
 FROM node:18-alpine
 
 WORKDIR /app

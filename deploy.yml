@@ -7,8 +7,8 @@ services:
     ports:
       - "81:81"
     env_file:
-      # fehlt die .env, startet der Container trotzdem und die
-      # Rezept-Endpunkte melden den fehlenden Key sauber an die UI zurück
+      # If the .env is missing, the container still starts and the
+      # recipe endpoints report the missing key cleanly back to the UI
       - path: ./backend/.env
         required: false
     environment:
