@@ -1,0 +1,14 @@
+# Secrets - werden zur Laufzeit per env_file injiziert, nicht ins Image gebacken
+.env
+
+# Python-Artefakte
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# lokale SQLite-Datenbank (Persistenz erfolgt ueber das Docker-Volume)
+*.db
+*.db-journal
+*.sqlite3

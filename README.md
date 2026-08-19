@@ -150,19 +150,19 @@ recipe_web_app/
 │   ├── src/api.js               # zentraler API-Client
 │   └── Dockerfile               # Multi-Stage-Build → Nginx
 ├── deploy.yml                   # Docker-Compose-Definition
-├── deploy.sh                    # Deployment-Skripte
+├── deploy.sh                    # Deployment-Skript
 └── docs/                        # Screenshots
 ```
 
 ### Tech-Stack
 
-| Ebene    | Technologie                                               |
-| -------- | --------------------------------------------------------- |
-| Frontend | React 18, React Router 6, CRA, Nginx (Auslieferung)       |
-| Backend  | Python 3.13, FastAPI, Pydantic                            |
+| Ebene    | Technologie                                                    |
+| -------- | -------------------------------------------------------------- |
+| Frontend | React 18, React Router 6, CRA, Nginx (Auslieferung)            |
+| Backend  | Python 3.13, FastAPI, Pydantic                                 |
 | KI       | Google Gemini API (`gemini-3.1-flash-lite`) via `google-genai` |
-| Daten    | SQLite                                                    |
-| Betrieb  | Docker, Docker Compose                                    |
+| Daten    | SQLite                                                         |
+| Betrieb  | Docker, Docker Compose                                         |
 
 ---
 

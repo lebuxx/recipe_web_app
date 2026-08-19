@@ -56,20 +56,34 @@ def get_agent() -> AgentGemini:
 def hello():
     return {"version": "0.5.0"}
 
+# Generates a recipe and stores its title for the prompt variation. A failing
+# Gemini call (e.g. invalid API key or unreachable API) must not crash with a
+# bare 500 
+def _generate_recipe(ingredients=None):
+    try:
+        recipe = get_agent().generate_recipe(ingredients=ingredients)
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception("Fehler bei der Rezeptgenerierung über die Gemini API")
+        raise HTTPException(
+            status_code=502,
+            detail="Das Rezept konnte nicht generiert werden. Möglicherweise ist der "
+                   "GEMINI_API_KEY ungültig oder die Gemini API ist gerade nicht "
+                   "erreichbar. Bitte den API-Key prüfen und es erneut versuchen.",
+        )
+    database.save_recipes_temp(recipe)
+    return recipe
+
 # Endpoint to generate a recipe without ingredients
 @app.get("/generate_recipe")
 def generate_recipe(data = None):
-    recipe = get_agent().generate_recipe(data)
-    database.save_recipes_temp(recipe)
-    return recipe
+    return _generate_recipe()
 
 # Endpoint to generate a recipe with ingredients
 @app.post("/generate_recipe_with_ingredients")
 def ingredients_at_home(data: IngredientsRequest):
-    ingredients = data.ingredients
-    recipe = get_agent().generate_recipe(ingredients=ingredients)
-    database.save_recipes_temp(recipe)
-    return recipe
+    return _generate_recipe(ingredients=data.ingredients)
 
 # Endpoint to get all saved recipes
 @app.get("/get_saved_recipes")

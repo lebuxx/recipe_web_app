@@ -6,6 +6,11 @@ services:
     image: web-app-backend
     ports:
       - "81:81"
+    env_file:
+      # fehlt die .env, startet der Container trotzdem und die
+      # Rezept-Endpunkte melden den fehlenden Key sauber an die UI zurück
+      - path: ./backend/.env
+        required: false
     environment:
       - DB_PATH=/app/data/saved_recipes.db
     volumes:
